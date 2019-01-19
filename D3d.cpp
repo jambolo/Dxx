@@ -39,7 +39,7 @@ HRESULT CreateD3dFullScreenDevice(IDirect3D9 *        pD3d,
                                   int                 width,
                                   int                 height,
                                   D3DFORMAT           format,
-                                  IDirect3DDevice9 ** ppDevice,
+                                  IDirect3DDevice11 ** ppDevice,
                                   D3DFORMAT           zBufferFormat /* = D3DFMT_D24S8 */,
                                   UINT                adapter /* = D3DADAPTER_DEFAULT*/,
                                   UINT                swapInterval /* = D3DPRESENT_INTERVAL_DEFAULT */,
@@ -92,7 +92,7 @@ HRESULT CreateD3dFullScreenDevice(IDirect3D9 *        pD3d,
 
 HRESULT CreateD3dWindowedDevice(IDirect3D9 *        pD3d,
                                 HWND                hWnd,
-                                IDirect3DDevice9 ** ppDevice,
+                                IDirect3DDevice11 ** ppDevice,
                                 D3DFORMAT           zBufferFormat /* = D3DFMT_UNKNOWN */,
                                 UINT                adapter /* = D3DADAPTER_DEFAULT*/,
                                 UINT                swapInterval /* = D3DPRESENT_INTERVAL_DEFAULT */,
@@ -131,7 +131,7 @@ HRESULT CreateD3dWindowedDevice(IDirect3D9 *        pD3d,
 //! @param	pDevice			The device to reset.
 //! @param	zBufferFormat	Z-buffer format. The default is @c D3DFMT_UNKNOWN.
 
-HRESULT ResetD3dWindowedDevice(IDirect3DDevice9 * pDevice, D3DFORMAT zBufferFormat /* = D3DFMT_UNKNOWN*/)
+HRESULT ResetD3dWindowedDevice(IDirect3DDevice11 * pDevice, D3DFORMAT zBufferFormat /* = D3DFMT_UNKNOWN*/)
 {
     ClearRenderStateCache();    // All render states will be reset, so clear the cache.
 
@@ -194,7 +194,7 @@ HRESULT FindDisplayMode(IDirect3D9 *     pD3d,
 static DWORD s_aRenderStateCache[RENDERSTATE_CACHE_SIZE];
 static bitset<RENDERSTATE_CACHE_SIZE> s_aRenderStateCacheValueIsValid;
 
-HRESULT SetRenderState(IDirect3DDevice9 * pD3dDevice, D3DRENDERSTATETYPE state, DWORD value)
+HRESULT SetRenderState(IDirect3DDevice11 * pD3dDevice, D3DRENDERSTATETYPE state, DWORD value)
 {
     assert_array_index_valid(s_aRenderStateCache, state);
 
@@ -222,7 +222,7 @@ HRESULT SetRenderState(IDirect3DDevice9 * pD3dDevice, D3DRENDERSTATETYPE state, 
     return hr;
 }
 
-HRESULT GetRenderState(IDirect3DDevice9 * pD3dDevice, D3DRENDERSTATETYPE state, DWORD * pValue)
+HRESULT GetRenderState(IDirect3DDevice11 * pD3dDevice, D3DRENDERSTATETYPE state, DWORD * pValue)
 {
     assert_array_index_valid(s_aRenderStateCache, state);
 
@@ -249,7 +249,7 @@ void ClearRenderStateCache()
     s_aRenderStateCacheValueIsValid.reset();
 }
 
-HRESULT AssembleVertexShader(IDirect3DDevice9 * pDevice,
+HRESULT AssembleVertexShader(IDirect3DDevice11 * pDevice,
                              LPCTSTR pSrcFile,
                              D3DXMACRO const * pDefines, ID3DXInclude * pInclude, DWORD Flags,
                              IDirect3DVertexShader9 ** ppShader)
@@ -277,7 +277,7 @@ HRESULT AssembleVertexShader(IDirect3DDevice9 * pDevice,
     return hr;
 }
 
-HRESULT AssemblePixelShader(IDirect3DDevice9 * pDevice,
+HRESULT AssemblePixelShader(IDirect3DDevice11 * pDevice,
                             LPCTSTR pSrcFile,
                             D3DXMACRO const * pDefines, ID3DXInclude * pInclude, DWORD Flags,
                             IDirect3DPixelShader9 ** ppPixelShader)
@@ -312,7 +312,7 @@ HRESULT AssemblePixelShader(IDirect3DDevice9 * pDevice,
 //! @param	arg2		Source 2 (see docs for @c D3DTA)
 //! @param	pTexture	Texture, or 0 if not used
 
-HRESULT SetTextureStage(IDirect3DDevice9 *      pD3dDevice,
+HRESULT SetTextureStage(IDirect3DDevice11 *      pD3dDevice,
                         int                     stage,
                         D3DTEXTUREOP            op,
                         DWORD                   arg1 /* = D3DTA_TEXTURE*/,

@@ -27,16 +27,16 @@ namespace Dxx
 //!
 //! @note	Release() must be called to release the buffer if it was successfully created
 
-HRESULT CreateStaticVertexBuffer(IDirect3DDevice9 * pDevice,
+HRESULT CreateStaticVertexBuffer(IDirect3DDevice11 * pDevice,
                                  void const * pData, UINT size,
-                                 DWORD fvf, IDirect3DVertexBuffer9 ** ppVB,
+                                 DWORD fvf, IDirect3DVertexBuffer11 ** ppVB,
                                  D3DPOOL pool /* = D3DPOOL_MANAGED*/)
 {
     assert(pData != 0);
     assert(size > 0);
     assert(ppVB != 0);
 
-    IDirect3DVertexBuffer9 * pVB;
+    IDirect3DVertexBuffer11 * pVB;
     HRESULT hr;
 
     // Create the vertex buffer
@@ -75,17 +75,17 @@ HRESULT CreateStaticVertexBuffer(IDirect3DDevice9 * pDevice,
 //!
 //! @note	Release() must be called to release the buffer if it was successfully created
 
-HRESULT CreateStaticIndexBuffer(IDirect3DDevice9 * pDevice,
+HRESULT CreateStaticIndexBuffer(IDirect3DDevice11 * pDevice,
                                 void const * pData, UINT size,
                                 D3DFORMAT format,
-                                IDirect3DIndexBuffer9 ** ppIB,
+                                IDirect3DIndexBuffer11 ** ppIB,
                                 D3DPOOL pool /* = D3DPOOL_MANAGED*/)
 {
     assert(pData != 0);
     assert(size > 0);
     assert(ppIB != 0);
 
-    IDirect3DIndexBuffer9 * pIB;
+    IDirect3DIndexBuffer11 * pIB;
     HRESULT hr;
 
     // Create the index buffer

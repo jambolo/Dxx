@@ -47,13 +47,13 @@ public:
     VertexBufferProxy(ID3DXMesh * pMesh);
 
     //! Constructor
-    VertexBufferProxy(IDirect3DVertexBuffer9 * pBuffer);
+    VertexBufferProxy(IDirect3DVertexBuffer11 * pBuffer);
 
     //! Destructor
     ~VertexBufferProxy();
 
     //! Returns the vertex buffer
-    IDirect3DVertexBuffer9 * GetVertexBuffer() const;
+    IDirect3DVertexBuffer11 * GetVertexBuffer() const;
 
     //! Locks the buffer
     HRESULT Lock(UINT OffsetToLock, UINT SizeToLock, DWORD Flags);
@@ -72,7 +72,7 @@ private:
     //! Initializes the offset values
     void InitializeOffsets();
 
-    IDirect3DVertexBuffer9 * pBuffer_;                  //!< The vertex buffer.
+    IDirect3DVertexBuffer11 * pBuffer_;                  //!< The vertex buffer.
     D3DVERTEXBUFFER_DESC desc_;                         //!< The "Desc" data for the buffer.
     void * pData_;                                  //!< Pointer to vertex buffer data (valid only while locked)
     int lockOffset_;                                    //!< Offset to beginning of the locked data
@@ -112,7 +112,7 @@ public:
     VRefBase(VertexBufferProxy const * pProxy, void * pVertex);
 
     //! Returns a reference to the position value.
-    D3DXVECTOR3 & Position() const;
+    DirectX::XMFLOAT4 & Position() const;
 
     //! Returns a reference to the W value.
     float & W() const;
@@ -133,7 +133,7 @@ public:
     DWORD & BlendIndexes() const;
 
     //! Returns a reference to the normal value.
-    D3DXVECTOR3 & Normal() const;
+    DirectX::XMFLOAT4 & Normal() const;
 
     //! Returns a reference to the point size value.
     float & PointSize() const;
@@ -226,14 +226,14 @@ public:
 
     //! @name Overrides VRefBase
     //@{
-    //	D3DXVECTOR3 & Position() const;
+    //	DirectX::XMFLOAT4 & Position() const;
     //	float & W() const;
     //	float & Blend0() const;
     //	float & Blend1() const;
     //	float & Blend2() const;
     //	float & Blend3() const;
     //	float & BlendIndexes() const;
-    //	D3DXVECTOR3 & Normal() const;
+    //	DirectX::XMFLOAT4 & Normal() const;
     //	float & PointSize() const;
     //	DWORD & Diffuse() const;
     //	DWORD & Specular() const;
@@ -283,14 +283,14 @@ public:
 
     //! @name Overrides VRefBase
     //@{
-    //	D3DXVECTOR3 & Position() const;
+    //	DirectX::XMFLOAT4 & Position() const;
     //	float & W() const;
     //	float & Blend0() const;
     //	float & Blend1() const;
     //	float & Blend2() const;
     //	float & Blend3() const;
     //	float & BlendIndexes() const;
-    //	D3DXVECTOR3 & Normal() const;
+    //	DirectX::XMFLOAT4 & Normal() const;
     //	float & PointSize() const;
     //	DWORD & Diffuse() const;
     //	DWORD & Specular() const;

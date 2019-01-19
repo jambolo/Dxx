@@ -60,12 +60,12 @@ D3DLIGHT9 const Light::defaultLightingParameters_ =
 //! @param	pD3dDevice	The D3D device this light that this light applies to
 //! @param	id			An identifier for this light. Valid values are 0 to MaxActiveLights-1 (in D3DCAPS9)
 //!
-//! @exception	ConstructorFailedException	IDirect3DDevice9::SetLight failed
+//! @exception	ConstructorFailedException	IDirect3DDevice11::SetLight failed
 
-Light::Light(IDirect3DDevice9 * pD3dDevice, int id)
-    : D3DLIGHT9(defaultLightingParameters_),
-    pD3dDevice_(pD3dDevice),
-    id_(id)
+Light::Light(IDirect3DDevice11 * pD3dDevice, int id)
+    : D3DLIGHT9(defaultLightingParameters_)
+    , pD3dDevice_(pD3dDevice)
+    , id_(id)
 
 {
     HRESULT hr;
@@ -76,21 +76,21 @@ Light::Light(IDirect3DDevice9 * pD3dDevice, int id)
 
     hr = pD3dDevice_->SetLight(id_, this);
     if (FAILED(hr))
-        throw ConstructorFailedException("IDirect3DDevice9::SetLight failed");
+        throw ConstructorFailedException("IDirect3DDevice11::SetLight failed");
 }
 
 //! @param	pD3dDevice	The D3D device this light that this light applies to
 //! @param	id			An identifier for this light. Valid values are 0 to MaxActiveLights-1 (in D3DCAPS9)
 //! @param	d3dLight	Lighting parameters (See the docs for D3DLIGHT9)
 //!
-//! @exception	ConstructorFailedException	IDirect3DDevice9::SetLight failed
+//! @exception	ConstructorFailedException	IDirect3DDevice11::SetLight failed
 //!
 //! @note		See the docs for D3DLIGHT9 for restrictions on lighting parameter values.
 
-Light::Light(IDirect3DDevice9 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight)
-    : D3DLIGHT9(d3dLight),
-    pD3dDevice_(pD3dDevice),
-    id_(id)
+Light::Light(IDirect3DDevice11 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight)
+    : D3DLIGHT9(d3dLight)
+    , pD3dDevice_(pD3dDevice)
+    , id_(id)
 {
     HRESULT hr;
 
@@ -127,25 +127,25 @@ Light::Light(IDirect3DDevice9 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight)
 
     hr = pD3dDevice_->SetLight(id_, this);
     if (FAILED(hr))
-        throw ConstructorFailedException("IDirect3DDevice9::SetLight failed");
+        throw ConstructorFailedException("IDirect3DDevice11::SetLight failed");
 }
 
 //! @param	pD3dDevice	The D3D device this light that this light applies to
 //! @param	id			An identifier for this light. Valid values are 0 to MaxActiveLights-1 (in D3DCAPS9)
 //! @param	...			Lighting parameters (See the docs for D3DLIGHT9)
 //!
-//! @exception	ConstructorFailedException	IDirect3DDevice9::SetLight failed
+//! @exception	ConstructorFailedException	IDirect3DDevice11::SetLight failed
 //!
 //! @note		See the docs for D3DLIGHT9 for restrictions on lighting parameter values.
 
-Light::Light(IDirect3DDevice9 *    pD3dDevice,
+Light::Light(IDirect3DDevice11 *    pD3dDevice,
              int                   id,
              D3DLIGHTTYPE          type,
              D3DCOLORVALUE const & diffuse,
              D3DCOLORVALUE const & specular,
              D3DCOLORVALUE const & ambient,
-             D3DVECTOR const &     position,
-             D3DVECTOR const &     direction,
+             DirectX::XMFLOAT4 const &     position,
+             DirectX::XMFLOAT4 const &     direction,
              float                 range,
              float                 falloff,
              float                 attenuation0,
@@ -153,8 +153,8 @@ Light::Light(IDirect3DDevice9 *    pD3dDevice,
              float                 attenuation2,
              float                 theta,
              float                 phi)
-/*D3DLIGHT9(),*/ : pD3dDevice_(pD3dDevice),
-    id_(id)
+/*D3DLIGHT9(),*/ : pD3dDevice_(pD3dDevice)
+    , id_(id)
 {
 #if defined(_DEBUG)
 
@@ -207,7 +207,7 @@ Light::Light(IDirect3DDevice9 *    pD3dDevice,
 
     hr = pD3dDevice_->SetLight(id_, this);
     if (FAILED(hr))
-        throw ConstructorFailedException("IDirect3DDevice9::SetLight failed");
+        throw ConstructorFailedException("IDirect3DDevice11::SetLight failed");
 }
 
 Light::~Light()
@@ -216,9 +216,9 @@ Light::~Light()
 }
 
 Light::Light(Light const & src)
-    : D3DLIGHT9(src),
-    pD3dDevice_(src.pD3dDevice_),
-    id_(src.id_)
+    : D3DLIGHT9(src)
+    , pD3dDevice_(src.pD3dDevice_)
+    , id_(src.id_)
 {
     pD3dDevice_->AddRef();
 }
@@ -246,7 +246,7 @@ Light & Light::operator =(Light const & rhs)
 HRESULT Light::SetPointValues(D3DCOLORVALUE const & diffuse,
                               D3DCOLORVALUE const & specular,
                               D3DCOLORVALUE const & ambient,
-                              D3DVECTOR const &     position,
+                              DirectX::XMFLOAT4 const &     position,
                               float                 range,
                               float                 attenuation0,
                               float                 attenuation1,
@@ -278,7 +278,7 @@ HRESULT Light::SetPointValues(D3DCOLORVALUE const & diffuse,
 HRESULT Light::SetDirectionalValues(D3DCOLORVALUE const & diffuse,
                                     D3DCOLORVALUE const & specular,
                                     D3DCOLORVALUE const & ambient,
-                                    D3DVECTOR const &     direction)
+                                    DirectX::XMFLOAT4 const &     direction)
 {
     assert(direction.x != 0.f || direction.y != 0.f || direction.z != 0.f);
 
@@ -301,8 +301,8 @@ HRESULT Light::SetDirectionalValues(D3DCOLORVALUE const & diffuse,
 HRESULT Light::SetSpotValues(D3DCOLORVALUE const & diffuse,
                              D3DCOLORVALUE const & specular,
                              D3DCOLORVALUE const & ambient,
-                             D3DVECTOR const &     position,
-                             D3DVECTOR const &     direction,
+                             DirectX::XMFLOAT4 const &     position,
+                             DirectX::XMFLOAT4 const &     direction,
                              float                 range,
                              float                 falloff,
                              float                 attenuation0,
@@ -381,7 +381,7 @@ D3DLIGHT9 const SwissArmyLight::defaultLightingParameters_ =
 //!
 //! @exception	ConstructorFailedException	Light() failed
 
-SwissArmyLight::SwissArmyLight(IDirect3DDevice9 * pD3dDevice, int id)
+SwissArmyLight::SwissArmyLight(IDirect3DDevice11 * pD3dDevice, int id)
     : Light(pD3dDevice, id)
 
 {
@@ -395,7 +395,7 @@ SwissArmyLight::SwissArmyLight(IDirect3DDevice9 * pD3dDevice, int id)
 //!
 //! @note		See the docs for D3DLIGHT9 for restrictions on lighting parameter values.
 
-SwissArmyLight::SwissArmyLight(IDirect3DDevice9 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight)
+SwissArmyLight::SwissArmyLight(IDirect3DDevice11 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight)
     : Light(pD3dDevice, id, d3dLight)
 {
 }
@@ -408,14 +408,14 @@ SwissArmyLight::SwissArmyLight(IDirect3DDevice9 * pD3dDevice, int id, D3DLIGHT9 
 //!
 //! @note		See the docs for D3DLIGHT9 for restrictions on lighting parameter values.
 
-SwissArmyLight::SwissArmyLight(IDirect3DDevice9 *    pD3dDevice,
+SwissArmyLight::SwissArmyLight(IDirect3DDevice11 *    pD3dDevice,
                                int                   id,
                                D3DLIGHTTYPE          type,
                                D3DCOLORVALUE const & diffuse,
                                D3DCOLORVALUE const & specular,
                                D3DCOLORVALUE const & ambient,
-                               D3DVECTOR const &     position,
-                               D3DVECTOR const &     direction,
+                               DirectX::XMFLOAT4 const &     position,
+                               DirectX::XMFLOAT4 const &     direction,
                                float                 range,
                                float                 falloff,
                                float                 attenuation0,
@@ -478,7 +478,7 @@ D3DLIGHT9 const AmbientLight::defaultLightingParameters_ =
 //!
 //! @exception	ConstructorFailedException	Light() failed
 
-AmbientLight::AmbientLight(IDirect3DDevice9 * pD3dDevice, int id)
+AmbientLight::AmbientLight(IDirect3DDevice11 * pD3dDevice, int id)
     : Light(pD3dDevice, id, defaultLightingParameters_)
 {
 }
@@ -489,7 +489,7 @@ AmbientLight::AmbientLight(IDirect3DDevice9 * pD3dDevice, int id)
 //!
 //! @exception	ConstructorFailedException	Light() failed
 
-AmbientLight::AmbientLight(IDirect3DDevice9 *    pD3dDevice,
+AmbientLight::AmbientLight(IDirect3DDevice11 *    pD3dDevice,
                            int                   id,
                            D3DCOLORVALUE const & ambient)
     : Light(pD3dDevice, id,
@@ -497,7 +497,7 @@ AmbientLight::AmbientLight(IDirect3DDevice9 *    pD3dDevice,
             Dxx::NoColor(),
             Dxx::NoColor(),
             ambient,
-            Dxx::Vector3Origin(),
+            DirectX::XMVectorZero(),
             Dxx::Vector3ZAxis(),
             0.f,
             0.f,
@@ -557,7 +557,7 @@ D3DLIGHT9 const PointLight::defaultLightingParameters_ =
 //!
 //! @exception	ConstructorFailedException	Light() failed
 
-PointLight::PointLight(IDirect3DDevice9 * pD3dDevice, int id)
+PointLight::PointLight(IDirect3DDevice11 * pD3dDevice, int id)
     : Light(pD3dDevice, id, defaultLightingParameters_)
 {
 }
@@ -573,7 +573,7 @@ PointLight::PointLight(IDirect3DDevice9 * pD3dDevice, int id)
 //!					- 0.f <= @c Range <= @c sqrt(FLT_MAX).
 //!					- One of the @c Attenuation values must not be 0.
 
-PointLight::PointLight(IDirect3DDevice9 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight)
+PointLight::PointLight(IDirect3DDevice11 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight)
     : Light(pD3dDevice, id, d3dLight)
 {
     // If the light's type is not D3DLIGHT_POINT, then there will be a problem.
@@ -593,12 +593,12 @@ PointLight::PointLight(IDirect3DDevice9 * pD3dDevice, int id, D3DLIGHT9 const & 
 //!					- 0.f <= @c Range <= @c sqrt(FLT_MAX).
 //!					- One of the @c Attenuation values must not be 0.
 
-PointLight::PointLight(IDirect3DDevice9 *    pD3dDevice,
+PointLight::PointLight(IDirect3DDevice11 *    pD3dDevice,
                        int                   id,
                        D3DCOLORVALUE const & diffuse,
                        D3DCOLORVALUE const & specular,
                        D3DCOLORVALUE const & ambient,
-                       D3DVECTOR const &     position,
+                       DirectX::XMFLOAT4 const &     position,
                        float                 range,
                        float                 attenuation0,
                        float                 attenuation1,
@@ -607,7 +607,7 @@ PointLight::PointLight(IDirect3DDevice9 *    pD3dDevice,
             D3DLIGHT_POINT,
             diffuse, specular, ambient,
             position,
-            Dxx::Vector3Origin(),
+            DirectX::XMVectorZero(),
             range,
             0.f,
             attenuation0, attenuation1, attenuation2,
@@ -627,7 +627,7 @@ PointLight::~PointLight()
 HRESULT PointLight::Set(D3DCOLORVALUE const & diffuse,
                         D3DCOLORVALUE const & specular,
                         D3DCOLORVALUE const & ambient,
-                        D3DVECTOR const &     position,
+                        DirectX::XMFLOAT4 const &     position,
                         float                 range,
                         float                 attenuation0,
                         float                 attenuation1,
@@ -674,7 +674,7 @@ D3DLIGHT9 const DirectionalLight::defaultLightingParameters_ =
 //!
 //! @exception	ConstructorFailedException	Light() failed
 
-DirectionalLight::DirectionalLight(IDirect3DDevice9 * pD3dDevice, int id)
+DirectionalLight::DirectionalLight(IDirect3DDevice11 * pD3dDevice, int id)
     : Light(pD3dDevice, id, defaultLightingParameters_)
 {
 }
@@ -689,7 +689,7 @@ DirectionalLight::DirectionalLight(IDirect3DDevice9 * pD3dDevice, int id)
 //!					- @c Type must be @c D3DLIGHT_DIRECTIONAL.
 //!					- @c Direction must not be (0, 0, 0).
 
-DirectionalLight::DirectionalLight(IDirect3DDevice9 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight)
+DirectionalLight::DirectionalLight(IDirect3DDevice11 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight)
     : Light(pD3dDevice, id, d3dLight)
 {
     // If the light's type is not D3DLIGHT_DIRECTIONAL, then there will be a problem.
@@ -707,16 +707,16 @@ DirectionalLight::DirectionalLight(IDirect3DDevice9 * pD3dDevice, int id, D3DLIG
 //! @note		Requirements for directional lights:
 //!					- @c Direction must not be (0, 0, 0).
 
-DirectionalLight::DirectionalLight(IDirect3DDevice9 *    pD3dDevice,
+DirectionalLight::DirectionalLight(IDirect3DDevice11 *    pD3dDevice,
                                    int                   id,
                                    D3DCOLORVALUE const & diffuse,
                                    D3DCOLORVALUE const & specular,
                                    D3DCOLORVALUE const & ambient,
-                                   D3DVECTOR const &     direction)
+                                   DirectX::XMFLOAT4 const &     direction)
     : Light(pD3dDevice, id,
             D3DLIGHT_DIRECTIONAL,
             diffuse, specular, ambient,
-            Dxx::Vector3Origin(),
+            DirectX::XMVectorZero(),
             direction,
             0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f)
 {
@@ -733,7 +733,7 @@ DirectionalLight::~DirectionalLight()
 HRESULT DirectionalLight::Set(D3DCOLORVALUE const & diffuse,
                               D3DCOLORVALUE const & specular,
                               D3DCOLORVALUE const & ambient,
-                              D3DVECTOR const &     direction)
+                              DirectX::XMFLOAT4 const &     direction)
 {
     assert(direction.x != 0.f || direction.y != 0.f || direction.z != 0.f);
 
@@ -783,7 +783,7 @@ D3DLIGHT9 const SpotLight::defaultLightingParameters_ =
 //!
 //! @exception	ConstructorFailedException	Light() failed
 
-SpotLight::SpotLight(IDirect3DDevice9 * pD3dDevice, int id)
+SpotLight::SpotLight(IDirect3DDevice11 * pD3dDevice, int id)
     : Light(pD3dDevice, id, defaultLightingParameters_)
 {
 }
@@ -802,7 +802,7 @@ SpotLight::SpotLight(IDirect3DDevice9 * pD3dDevice, int id)
 //!					- 0.f < @c Theta <= @c Phi
 //!					- 0.f < @c Phi < @c pi.
 
-SpotLight::SpotLight(IDirect3DDevice9 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight)
+SpotLight::SpotLight(IDirect3DDevice11 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight)
     : Light(pD3dDevice, id, d3dLight)
 {
     assert(d3dLight.Type == D3DLIGHT_SPOT);
@@ -826,13 +826,13 @@ SpotLight::SpotLight(IDirect3DDevice9 * pD3dDevice, int id, D3DLIGHT9 const & d3
 //!					- 0.f < @c Theta <= @c Phi
 //!					- 0.f < @c Phi < @c pi.
 
-SpotLight::SpotLight(IDirect3DDevice9 *    pD3dDevice,
+SpotLight::SpotLight(IDirect3DDevice11 *    pD3dDevice,
                      int                   id,
                      D3DCOLORVALUE const & diffuse,
                      D3DCOLORVALUE const & specular,
                      D3DCOLORVALUE const & ambient,
-                     D3DVECTOR const &     position,
-                     D3DVECTOR const &     direction,
+                     DirectX::XMFLOAT4 const &     position,
+                     DirectX::XMFLOAT4 const &     direction,
                      float                 range,
                      float                 falloff,
                      float                 attenuation0,
@@ -867,8 +867,8 @@ SpotLight::~SpotLight()
 HRESULT SpotLight::Set(D3DCOLORVALUE const & diffuse,
                        D3DCOLORVALUE const & specular,
                        D3DCOLORVALUE const & ambient,
-                       D3DVECTOR const &     position,
-                       D3DVECTOR const &     direction,
+                       DirectX::XMFLOAT4 const &     position,
+                       DirectX::XMFLOAT4 const &     direction,
                        float                 range,
                        float                 falloff,
                        float                 attenuation0,

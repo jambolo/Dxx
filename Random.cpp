@@ -25,7 +25,7 @@ RandomDirection::RandomDirection(Seed seed)
 {
 }
 
-D3DXVECTOR3 RandomDirection::Get()
+DirectX::XMFLOAT4 RandomDirection::Get()
 {
     float const r = RandomFloat::Get(float(Math::TWO_PI));
     float const t = RandomFloat::Get(float(Math::TWO_PI));
@@ -35,7 +35,7 @@ D3DXVECTOR3 RandomDirection::Get()
     Math::fsincos(r, &sr, &cr);
     Math::fsincos(t, &st, &ct);
 
-    return D3DXVECTOR3(ct, cr * st, sr * st);
+    return DirectX::XMFLOAT4(ct, cr * st, sr * st);
 }
 
 //! This function returns a random unit vector whose angle from the X axis is uniformly-distributed in range
@@ -45,7 +45,7 @@ D3DXVECTOR3 RandomDirection::Get()
 //!
 //! @return	A unit vector.
 
-D3DXVECTOR3 RandomDirection::Get(float a)
+DirectX::XMFLOAT4 RandomDirection::Get(float a)
 {
     float const ca = cosf(a);
     float const cr = 1.f - RandomFloat::Get(1.f - ca);
@@ -56,7 +56,7 @@ D3DXVECTOR3 RandomDirection::Get(float a)
 
     Math::fsincos(t, &st, &ct);
 
-    return D3DXVECTOR3(cr, ct * sr, st * sr);
+    return DirectX::XMFLOAT4(cr, ct * sr, st * sr);
 }
 
 //! This function returns a random unit vector whose angle from the XZ plane is uniformly-distributed in range
@@ -68,7 +68,7 @@ D3DXVECTOR3 RandomDirection::Get(float a)
 //!
 //! @return	A unit vector.
 
-D3DXVECTOR3 RandomDirection::Get(float a, float b)
+DirectX::XMFLOAT4 RandomDirection::Get(float a, float b)
 {
     assert(a != 0.f);
     assert_limits(0.f, a, Math::PI);
@@ -96,7 +96,7 @@ D3DXVECTOR3 RandomDirection::Get(float a, float b)
 
     Math::fsincos(t, &st, &ct);
 
-    return D3DXVECTOR3(cf * ct, sf, cf * st);
+    return DirectX::XMFLOAT4(cf * ct, sf, cf * st);
 }
 
 //!
@@ -119,7 +119,7 @@ RandomOrientation::RandomOrientation(Seed seed)
 {
 }
 
-D3DXQUATERNION RandomOrientation::Get()
+DirectX::XMFLOAT4 RandomOrientation::Get()
 {
     float const r = RandomFloat::Get(float(Math::TWO_PI));
     float const t = RandomFloat::Get(float(Math::TWO_PI));
@@ -129,9 +129,9 @@ D3DXQUATERNION RandomOrientation::Get()
     Math::fsincos(r, &sr, &cr);
     Math::fsincos(t, &st, &ct);
 
-    D3DXVECTOR3 const direction = D3DXVECTOR3(ct, cr * st, sr * st);
+    DirectX::XMFLOAT4 const direction = DirectX::XMFLOAT4(ct, cr * st, sr * st);
     float const       a         = RandomFloat::Get(float(Math::TWO_PI));
-    D3DXQUATERNION    q;
+    DirectX::XMFLOAT4    q;
 
     D3DXQuaternionRotationAxis(&q, &direction, a);
 

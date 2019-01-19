@@ -25,20 +25,20 @@ namespace Dxx
 //! @param	position		The camera's location.
 //! @param	orientation		The camera's orientation.
 
-Camera::Camera(IDirect3DDevice9 *     pDevice,
+Camera::Camera(IDirect3DDevice11 *     pDevice,
                float                  angleOfView,
                float                  nearDistance,
                float                  farDistance,
                float                  aspectRatio,
-               D3DXVECTOR3 const &    position,
-               D3DXQUATERNION const & orientation /* = QuaternionIdentity()*/)
-    : pDevice_(pDevice),
-    angleOfView_(Math::ToRadians(angleOfView)),
-    nearDistance_(nearDistance),
-    farDistance_(farDistance),
-    frame_(position, orientation),
-    aspectRatio_(aspectRatio),
-    viewOffset_(0.0f, 0.0f)
+               DirectX::XMFLOAT4 const &    position,
+               DirectX::XMFLOAT4 const & orientation /* = QuaternionIdentity()*/)
+    : pDevice_(pDevice)
+    , angleOfView_(Math::ToRadians(angleOfView))
+    , nearDistance_(nearDistance)
+    , farDistance_(farDistance)
+    , frame_(position, orientation)
+    , aspectRatio_(aspectRatio)
+    , viewOffset_(0.0f, 0.0f)
 {
     pDevice_->AddRef();
 
@@ -52,19 +52,19 @@ Camera::Camera(IDirect3DDevice9 *     pDevice,
 //! @param	aspectRatio		View window w / h
 //! @param	frame			The camera's frame of reference.
 
-Camera::Camera(IDirect3DDevice9 * pDevice,
+Camera::Camera(IDirect3DDevice11 * pDevice,
                float              angleOfView,
                float              nearDistance,
                float              farDistance,
                float              aspectRatio,
                Frame const &      frame /* = Frame::Identity()*/)
-    : pDevice_(pDevice),
-    angleOfView_(Math::ToRadians(angleOfView)),
-    nearDistance_(nearDistance),
-    farDistance_(farDistance),
-    frame_(frame),
-    aspectRatio_(aspectRatio),
-    viewOffset_(0.0f, 0.0f)
+    : pDevice_(pDevice)
+    , angleOfView_(Math::ToRadians(angleOfView))
+    , nearDistance_(nearDistance)
+    , farDistance_(farDistance)
+    , frame_(frame)
+    , aspectRatio_(aspectRatio)
+    , viewOffset_(0.0f, 0.0f)
 {
     pDevice_->AddRef();
 
@@ -77,17 +77,17 @@ Camera::~Camera()
 }
 
 Camera::Camera(Camera const & src)
-    : pDevice_(src.pDevice_),
-    frame_(src.frame_),
-    nearDistance_(src.nearDistance_),
-    farDistance_(src.farDistance_),
-    angleOfView_(src.angleOfView_),
-    viewOffset_(src.viewOffset_),
-    aspectRatio_(src.aspectRatio_),
-    viewMatrix_(src.viewMatrix_),
-    projectionMatrix_(src.projectionMatrix_),
-    viewProjectionMatrix_(src.viewProjectionMatrix_),
-    viewFrustum_(src.viewFrustum_)
+    : pDevice_(src.pDevice_)
+    , frame_(src.frame_)
+    , nearDistance_(src.nearDistance_)
+    , farDistance_(src.farDistance_)
+    , angleOfView_(src.angleOfView_)
+    , viewOffset_(src.viewOffset_)
+    , aspectRatio_(src.aspectRatio_)
+    , viewMatrix_(src.viewMatrix_)
+    , projectionMatrix_(src.projectionMatrix_)
+    , viewProjectionMatrix_(src.viewProjectionMatrix_)
+    , viewFrustum_(src.viewFrustum_)
 {
     pDevice_->AddRef();
 }
@@ -132,9 +132,9 @@ void Camera::Reshape()
     assert_succeeded(hr);
 }
 
-void Camera::LookAt(D3DXVECTOR3 const & to, D3DXVECTOR3 const & from, D3DXVECTOR3 const & up)
+void Camera::LookAt(DirectX::XMFLOAT4 const & to, DirectX::XMFLOAT4 const & from, DirectX::XMFLOAT4 const & up)
 {
-    D3DXMATRIX lookat;
+    DirectX::XMFLOAT4X4 lookat;
     D3DXMatrixLookAtLH(&lookat, &from, &to, &up);
 
     frame_.SetTransformationMatrix(lookat);
@@ -148,7 +148,7 @@ void Camera::SyncViewMatrix()
 //	// Get the frame and invert it (because, in reality, the camera remains
 //	// at the origin and the world is transformed).
 //
-//	D3DXMATRIX	r;
+//	DirectX::XMFLOAT4X4	r;
 //	D3DXMatrixInverse( r, NULL, frame_.GetTransformation() );
 
     // Rotate and translate
@@ -163,20 +163,20 @@ void Camera::SyncViewMatrix()
     // Make sure that there is no scaling so we don't have to worry about inverting being different from
     // transposing.
 
-    D3DXVECTOR3 const scale = frame_.GetScale();
+    DirectX::XMFLOAT4 const scale = frame_.GetScale();
     assert(Math::IsCloseTo(scale.x, 1., Math::DEFAULT_FLOAT_NORMALIZED_TOLERANCE));
     assert(Math::IsCloseTo(scale.y, 1., Math::DEFAULT_FLOAT_NORMALIZED_TOLERANCE));
     assert(Math::IsCloseTo(scale.z, 1., Math::DEFAULT_FLOAT_NORMALIZED_TOLERANCE));
 
 #endif  // defined( _DEBUG )
 
-    D3DXMATRIX const r = frame_.GetOrientationMatrix();
-    D3DXMATRIX       ir;
+    DirectX::XMFLOAT4X4 const r = frame_.GetOrientationMatrix();
+    DirectX::XMFLOAT4X4       ir;
     D3DXMatrixTranspose(&ir, &r);
 
     // Get the translation and invert it (by negating)
 
-    D3DXMATRIX t;
+    DirectX::XMFLOAT4X4 t;
     D3DXMatrixTranslation(&t, -frame_.GetTranslation().x,
                           -frame_.GetTranslation().y,
                           -frame_.GetTranslation().z);

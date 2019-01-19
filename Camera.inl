@@ -25,7 +25,7 @@
 #define D3D_DEBUG_INFO
 #endif
 #include <d3d9.h>
-#include <d3dx9math.h>
+#include <DirectXMath.h>
 
 namespace Dxx
 {
@@ -46,13 +46,13 @@ inline Frame Camera::GetFrame() const
 //!
 //! @param	position	New position
 
-inline void Camera::SetPosition(D3DXVECTOR3 const & position)
+inline void Camera::SetPosition(DirectX::XMFLOAT4 const & position)
 {
     frame_.SetTranslation(position);
     SyncInternalState();
 }
 
-inline D3DXVECTOR3 Camera::GetPosition() const
+inline DirectX::XMFLOAT4 Camera::GetPosition() const
 {
     return frame_.GetTranslation();
 }
@@ -60,13 +60,13 @@ inline D3DXVECTOR3 Camera::GetPosition() const
 //!
 //! @param	orientation		New orientation
 
-inline void Camera::SetOrientation(D3DXQUATERNION const & orientation)
+inline void Camera::SetOrientation(DirectX::XMFLOAT4 const & orientation)
 {
     frame_.SetOrientation(orientation);
     SyncInternalState();
 }
 
-inline D3DXQUATERNION Camera::GetOrientation() const
+inline DirectX::XMFLOAT4 Camera::GetOrientation() const
 {
     return frame_.GetOrientation();
 }
@@ -120,7 +120,7 @@ inline float Camera::GetAngleOfView() const
 //!
 //! @param	rotation	A quaternion describing the rotation.
 
-inline void Camera::Turn(D3DXQUATERNION const & rotation)
+inline void Camera::Turn(DirectX::XMFLOAT4 const & rotation)
 {
     frame_.Rotate(rotation);
     SyncInternalState();
@@ -129,9 +129,9 @@ inline void Camera::Turn(D3DXQUATERNION const & rotation)
 //! @param	angle	Angle of rotation (in degrees)
 //! @param	axis	Axis of rotation
 
-inline void Camera::Turn(float angle, D3DXVECTOR3 const & axis)
+inline void Camera::Turn(float angle, DirectX::XMFLOAT4 const & axis)
 {
-    D3DXQUATERNION q;
+    DirectX::XMFLOAT4 q;
     D3DXQuaternionRotationAxis(&q, &axis, Math::ToRadians(angle));
     Turn(q);
 }
@@ -139,7 +139,7 @@ inline void Camera::Turn(float angle, D3DXVECTOR3 const & axis)
 //!
 //! @param	distance	Amount to move the camera
 
-inline void Camera::Move(D3DXVECTOR3 const & distance)
+inline void Camera::Move(DirectX::XMFLOAT4 const & distance)
 {
     frame_.Translate(distance);
     SyncInternalState();
@@ -165,36 +165,36 @@ inline void Camera::SetAspectRatio(float w, float h)
 
 inline void Camera::SetViewOffset(float x, float y)
 {
-    viewOffset_ = D3DXVECTOR2(x, y);
+    viewOffset_ = DirectX::XMFLOAT2(x, y);
     SyncInternalState();
 }
 
-inline D3DXVECTOR3 Camera::GetDirection() const
+inline DirectX::XMFLOAT4 Camera::GetDirection() const
 {
     return frame_.GetZAxis();
 }
 
-inline D3DXVECTOR3 Camera::GetUp() const
+inline DirectX::XMFLOAT4 Camera::GetUp() const
 {
     return frame_.GetYAxis();
 }
 
-inline D3DXVECTOR3 Camera::GetRight() const
+inline DirectX::XMFLOAT4 Camera::GetRight() const
 {
     return frame_.GetXAxis();
 }
 
-inline D3DXMATRIX const & Camera::GetProjectionMatrix() const
+inline DirectX::XMFLOAT4X4 const & Camera::GetProjectionMatrix() const
 {
     return projectionMatrix_;
 }
 
-inline D3DXMATRIX const & Camera::GetViewMatrix() const
+inline DirectX::XMFLOAT4X4 const & Camera::GetViewMatrix() const
 {
     return viewMatrix_;
 }
 
-inline D3DXMATRIX const & Camera::GetViewProjectionMatrix() const
+inline DirectX::XMFLOAT4X4 const & Camera::GetViewProjectionMatrix() const
 {
     return viewProjectionMatrix_;
 }

@@ -41,7 +41,7 @@ public:
     XMesh(std::auto_ptr<ID3DXMesh> qMesh,
           ID3DXBuffer const * pMaterialBuffer, int numMaterials,
           ID3DXBuffer const * pAdjacencyBuffer,
-          IDirect3DDevice9 * pD3dDevice);
+          IDirect3DDevice11 * pD3dDevice);
 
     // Destructor
     virtual ~XMesh();
@@ -50,15 +50,15 @@ public:
     HRESULT Draw();
 
     //! Loads an .X file creating an XMesh. Returns a pointer to the new mesh.
-    static std::auto_ptr<XMesh> Create(char const * pFilename, IDirect3DDevice9 * pD3dDevice);
+    static std::auto_ptr<XMesh> Create(char const * pFilename, IDirect3DDevice11 * pD3dDevice);
 
 private:
 
     typedef std::vector<D3DMATERIAL9>         MaterialList;     //!< A list of materials
-    typedef std::vector<IDirect3DTexture9 *>  TextureList;      //!< A list of textures
+    typedef std::vector<IDirect3DTexture11 *>  TextureList;      //!< A list of textures
     typedef std::vector<D3DXATTRIBUTERANGE>   AttributeList;    //!< A list of attributes
 
-    IDirect3DDevice9 * pD3dDevice_;         //!< The device this mesh is associated with
+    IDirect3DDevice11 * pD3dDevice_;         //!< The device this mesh is associated with
     ID3DXMesh * pMesh_;                 //!< The mesh.
     MaterialList materials_;            //!< The materials used by the mesh.
     TextureList textures_;                  //!< The textures used by the mesh.

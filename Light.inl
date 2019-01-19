@@ -97,7 +97,7 @@ inline D3DCOLORVALUE const & Light::GetAmbient() const
 //!
 //! @param	position	See the docs for D3DLIGHT9 for a description.
 
-inline HRESULT Light::SetPosition(D3DVECTOR const & position)
+inline HRESULT Light::SetPosition(DirectX::XMFLOAT4 const & position)
 {
     Position = position;
 
@@ -106,7 +106,7 @@ inline HRESULT Light::SetPosition(D3DVECTOR const & position)
     return pD3dDevice_->SetLight(id_, this);
 }
 
-inline D3DVECTOR const & Light::GetPosition() const
+inline DirectX::XMFLOAT4 const & Light::GetPosition() const
 {
     return Position;
 }
@@ -114,7 +114,7 @@ inline D3DVECTOR const & Light::GetPosition() const
 //!
 //! @param	direction	See the docs for D3DLIGHT9 for a description.
 
-inline HRESULT Light::SetDirection(D3DVECTOR const & direction)
+inline HRESULT Light::SetDirection(DirectX::XMFLOAT4 const & direction)
 {
     Direction = direction;
 
@@ -123,7 +123,7 @@ inline HRESULT Light::SetDirection(D3DVECTOR const & direction)
     return pD3dDevice_->SetLight(id_, this);
 }
 
-inline D3DVECTOR const & Light::GetDirection() const
+inline DirectX::XMFLOAT4 const & Light::GetDirection() const
 {
     return Direction;
 }
@@ -256,22 +256,22 @@ inline D3DCOLORVALUE const & SwissArmyLight::GetAmbient() const
     return Light::GetAmbient();
 }
 
-inline HRESULT SwissArmyLight::SetPosition(D3DVECTOR const & position)
+inline HRESULT SwissArmyLight::SetPosition(DirectX::XMFLOAT4 const & position)
 {
     return Light::SetPosition(position);
 }
 
-inline D3DVECTOR const & SwissArmyLight::GetPosition() const
+inline DirectX::XMFLOAT4 const & SwissArmyLight::GetPosition() const
 {
     return Light::GetPosition();
 }
 
-inline HRESULT SwissArmyLight::SetDirection(D3DVECTOR const & direction)
+inline HRESULT SwissArmyLight::SetDirection(DirectX::XMFLOAT4 const & direction)
 {
     return Light::SetDirection(direction);
 }
 
-inline D3DVECTOR const & SwissArmyLight::GetDirection() const
+inline DirectX::XMFLOAT4 const & SwissArmyLight::GetDirection() const
 {
     return Light::GetDirection();
 }
@@ -378,12 +378,12 @@ inline D3DCOLORVALUE const & PointLight::GetAmbient() const
     return Light::GetAmbient();
 }
 
-inline HRESULT PointLight::SetPosition(D3DVECTOR const & position)
+inline HRESULT PointLight::SetPosition(DirectX::XMFLOAT4 const & position)
 {
     return Light::SetPosition(position);
 }
 
-inline D3DVECTOR const & PointLight::GetPosition() const
+inline DirectX::XMFLOAT4 const & PointLight::GetPosition() const
 {
     return Light::GetPosition();
 }
@@ -444,12 +444,12 @@ inline D3DCOLORVALUE const & DirectionalLight::GetAmbient() const
     return Light::GetAmbient();
 }
 
-inline HRESULT DirectionalLight::SetDirection(D3DVECTOR const & direction)
+inline HRESULT DirectionalLight::SetDirection(DirectX::XMFLOAT4 const & direction)
 {
     return Light::SetDirection(direction);
 }
 
-inline D3DVECTOR const & DirectionalLight::GetDirection() const
+inline DirectX::XMFLOAT4 const & DirectionalLight::GetDirection() const
 {
     return Light::GetDirection();
 }
@@ -490,22 +490,22 @@ inline D3DCOLORVALUE const & SpotLight::GetAmbient() const
     return Light::GetAmbient();
 }
 
-inline HRESULT SpotLight::SetPosition(D3DVECTOR const & position)
+inline HRESULT SpotLight::SetPosition(DirectX::XMFLOAT4 const & position)
 {
     return Light::SetPosition(position);
 }
 
-inline D3DVECTOR const & SpotLight::GetPosition() const
+inline DirectX::XMFLOAT4 const & SpotLight::GetPosition() const
 {
     return Light::GetPosition();
 }
 
-inline HRESULT SpotLight::SetDirection(D3DVECTOR const & direction)
+inline HRESULT SpotLight::SetDirection(DirectX::XMFLOAT4 const & direction)
 {
     return Light::SetDirection(direction);
 }
 
-inline D3DVECTOR const & SpotLight::GetDirection() const
+inline DirectX::XMFLOAT4 const & SpotLight::GetDirection() const
 {
     return Light::GetDirection();
 }

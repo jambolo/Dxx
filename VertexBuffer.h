@@ -29,16 +29,16 @@ namespace Dxx
 //@{
 
 //! Creates a static vertex buffer. Returns the result code.
-HRESULT CreateStaticVertexBuffer(IDirect3DDevice9 * pDevice,
+HRESULT CreateStaticVertexBuffer(IDirect3DDevice11 * pDevice,
                                  void const * pData, size_t size, DWORD fvf,
-                                 IDirect3DVertexBuffer9 ** ppVB,
+                                 IDirect3DVertexBuffer11 ** ppVB,
                                  D3DPOOL pool = D3DPOOL_MANAGED);
 
 //! Creates a static vertex buffer. Returns the result code.
-HRESULT CreateStaticIndexBuffer(IDirect3DDevice9 * pDevice,
+HRESULT CreateStaticIndexBuffer(IDirect3DDevice11 * pDevice,
                                 void const * pData, size_t size,
                                 D3DFORMAT format,
-                                IDirect3DIndexBuffer9 ** ppVB,
+                                IDirect3DIndexBuffer11 ** ppVB,
                                 D3DPOOL pool = D3DPOOL_MANAGED);
 //@}
 } // namespace Dxx

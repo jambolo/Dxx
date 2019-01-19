@@ -20,9 +20,9 @@ namespace Dxx
 //! @param	v0,v1,v2	Vertexes. The order of the vertexes is important. They should be clockwise.
 //! @param	pN			Location to store the normal (overwriting a parameter is ok)
 
-D3DXVECTOR3 * ComputeFaceNormal(D3DXVECTOR3 const & v0, D3DXVECTOR3 const & v1, D3DXVECTOR3 const & v2, D3DXVECTOR3 * pN)
+DirectX::XMFLOAT4 * ComputeFaceNormal(DirectX::XMFLOAT4 const & v0, DirectX::XMFLOAT4 const & v1, DirectX::XMFLOAT4 const & v2, DirectX::XMFLOAT4 * pN)
 {
-    D3DXVECTOR3 v0v1, v0v2;
+    DirectX::XMFLOAT4 v0v1, v0v2;
 
     D3DXVec3Subtract(&v0v1, &v1, &v0);
     D3DXVec3Subtract(&v0v2, &v2, &v0);
@@ -42,7 +42,7 @@ D3DXVECTOR3 * ComputeFaceNormal(D3DXVECTOR3 const & v0, D3DXVECTOR3 const & v1, 
 //!					values to the actual Z values.
 //! @param	pN		Where to put the normal
 
-D3DXVECTOR3 * ComputeGridNormal(float z1, float z2, float z3, float z4, float scale, D3DXVECTOR3 * pN)
+DirectX::XMFLOAT4 * ComputeGridNormal(float z1, float z2, float z3, float z4, float scale, DirectX::XMFLOAT4 * pN)
 {
 //	The 4 adjacent points in a uniform grid: A, B, C, D
 //

@@ -39,7 +39,7 @@ VertexBufferProxy::VertexBufferProxy(ID3DXMesh * pMesh)
 
 //! @param	pBuffer		Vertex buffer to proxy
 
-VertexBufferProxy::VertexBufferProxy(IDirect3DVertexBuffer9 * pBuffer)
+VertexBufferProxy::VertexBufferProxy(IDirect3DVertexBuffer11 * pBuffer)
     : pBuffer_(pBuffer)
 {
     pBuffer_->AddRef();
@@ -62,30 +62,30 @@ void VertexBufferProxy::InitializeOffsets()
     switch (desc_.FVF & D3DFVF_POSITION_MASK)
     {
         case D3DFVF_XYZ:
-            bump = 0                     + sizeof(D3DVECTOR);
+            bump = 0                     + sizeof(DirectX::XMFLOAT4);
             break;
 
         case D3DFVF_XYZRHW:
         case D3DFVF_XYZW:
-            wOffset_ = 0                     + sizeof(D3DVECTOR);
+            wOffset_ = 0                     + sizeof(DirectX::XMFLOAT4);
             bump     = wOffset_              + sizeof(float);
             break;
 
         case D3DFVF_XYZB1:
             if ((desc_.FVF & D3DFVF_LASTBETA_UBYTE4) == 0)
             {
-                blend0Offset_ = 0                     + sizeof(D3DVECTOR);
+                blend0Offset_ = 0                     + sizeof(DirectX::XMFLOAT4);
                 bump          = blend0Offset_     + sizeof(float);
             }
             else
             {
-                blendIndexesOffset_ = 0                     + sizeof(D3DVECTOR);
+                blendIndexesOffset_ = 0                     + sizeof(DirectX::XMFLOAT4);
                 bump = blendIndexesOffset_   + sizeof(DWORD);
             }
             break;
 
         case D3DFVF_XYZB2:
-            blend0Offset_ = 0                     + sizeof(D3DVECTOR);
+            blend0Offset_ = 0                     + sizeof(DirectX::XMFLOAT4);
             if ((desc_.FVF & D3DFVF_LASTBETA_UBYTE4) == 0)
             {
                 blend1Offset_ = blend0Offset_     + sizeof(float);
@@ -99,7 +99,7 @@ void VertexBufferProxy::InitializeOffsets()
             break;
 
         case D3DFVF_XYZB3:
-            blend0Offset_ = 0                     + sizeof(D3DVECTOR);
+            blend0Offset_ = 0                     + sizeof(DirectX::XMFLOAT4);
             blend1Offset_ = blend0Offset_         + sizeof(float);
             if ((desc_.FVF & D3DFVF_LASTBETA_UBYTE4) == 0)
             {
@@ -114,7 +114,7 @@ void VertexBufferProxy::InitializeOffsets()
             break;
 
         case D3DFVF_XYZB4:
-            blend0Offset_ = 0                     + sizeof(D3DVECTOR);
+            blend0Offset_ = 0                     + sizeof(DirectX::XMFLOAT4);
             blend1Offset_ = blend0Offset_         + sizeof(float);
             blend2Offset_ = blend1Offset_         + sizeof(float);
             if ((desc_.FVF & D3DFVF_LASTBETA_UBYTE4) == 0)
@@ -130,7 +130,7 @@ void VertexBufferProxy::InitializeOffsets()
             break;
 
         case D3DFVF_XYZB5:
-            blend0Offset_ = 0                     + sizeof(D3DVECTOR);
+            blend0Offset_ = 0                     + sizeof(DirectX::XMFLOAT4);
             blend1Offset_ = blend0Offset_         + sizeof(float);
             blend2Offset_ = blend1Offset_         + sizeof(float);
             blend3Offset_ = blend2Offset_         + sizeof(float);
@@ -160,7 +160,7 @@ void VertexBufferProxy::InitializeOffsets()
 
     if ((desc_.FVF & D3DFVF_NORMAL) != 0)
     {
-        bump = sizeof(D3DVECTOR);
+        bump = sizeof(DirectX::XMFLOAT4);
         pointSizeOffset_ += bump;
         diffuseOffset_   += bump;
         specularOffset_  += bump;

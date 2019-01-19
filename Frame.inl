@@ -21,7 +21,7 @@
 #include "Math/Math.h"
 
 #include <cassert>
-#include <d3dx9math.h>
+#include <DirectXMath.h>
 #include <windows.h>
 
 namespace Dxx
@@ -33,22 +33,22 @@ inline Frame::Frame()
 
 //!
 //! @param	r	Orientation value.
-inline void Frame::SetOrientation(D3DXQUATERNION const & r)
+inline void Frame::SetOrientation(DirectX::XMFLOAT4 const & r)
 {
     D3DXMatrixRotationQuaternion(&M_, &r);
 }
 
-inline D3DXQUATERNION Frame::GetOrientation() const
+inline DirectX::XMFLOAT4 Frame::GetOrientation() const
 {
-    D3DXMATRIX     r = GetOrientationMatrix();
-    D3DXQUATERNION q;
+    DirectX::XMFLOAT4X4     r = GetOrientationMatrix();
+    DirectX::XMFLOAT4 q;
 
     D3DXQuaternionRotationMatrix(&q, &r);
 
     return q;
 }
 
-inline D3DXMATRIX const & Frame::GetTransformationMatrix() const
+inline DirectX::XMFLOAT4X4 const & Frame::GetTransformationMatrix() const
 {
     return M_;
 }
@@ -56,7 +56,7 @@ inline D3DXMATRIX const & Frame::GetTransformationMatrix() const
 //!
 //! @param	m	Value to set the transformation matrix to.
 
-inline void Frame::SetTransformationMatrix(D3DXMATRIX const & m)
+inline void Frame::SetTransformationMatrix(DirectX::XMFLOAT4X4 const & m)
 {
     // Make sure that none of the scales are 0
 
@@ -71,30 +71,30 @@ inline void Frame::SetTransformationMatrix(D3DXMATRIX const & m)
     M_ = m;
 }
 
-inline D3DXVECTOR3 Frame::GetXAxis() const
+inline DirectX::XMFLOAT4 Frame::GetXAxis() const
 {
-    D3DXVECTOR3 const axis = D3DXVECTOR3(M_._11, M_._12, M_._13);
-    D3DXVECTOR3       x;
+    DirectX::XMFLOAT4 const axis = DirectX::XMFLOAT4(M_._11, M_._12, M_._13);
+    DirectX::XMFLOAT4       x;
 
     D3DXVec3Normalize(&x, &axis);
 
     return x;
 }
 
-inline D3DXVECTOR3 Frame::GetYAxis() const
+inline DirectX::XMFLOAT4 Frame::GetYAxis() const
 {
-    D3DXVECTOR3 const axis = D3DXVECTOR3(M_._21, M_._22, M_._23);
-    D3DXVECTOR3       y;
+    DirectX::XMFLOAT4 const axis = DirectX::XMFLOAT4(M_._21, M_._22, M_._23);
+    DirectX::XMFLOAT4       y;
 
     D3DXVec3Normalize(&y, &axis);
 
     return y;
 }
 
-inline D3DXVECTOR3 Frame::GetZAxis() const
+inline DirectX::XMFLOAT4 Frame::GetZAxis() const
 {
-    D3DXVECTOR3 const axis = D3DXVECTOR3(M_._31, M_._32, M_._33);
-    D3DXVECTOR3       z;
+    DirectX::XMFLOAT4 const axis = DirectX::XMFLOAT4(M_._31, M_._32, M_._33);
+    DirectX::XMFLOAT4       z;
 
     D3DXVec3Normalize(&z, &axis);
 

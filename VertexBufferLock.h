@@ -40,13 +40,13 @@ public:
     //! The constructor locks the vertex buffer (and adds a reference).
     //!
     //! @param	pVB			Vertex buffer to lock
-    //! @param	offset		Where to start the lock (see IDirect3DVertexBuffer9::Lock for more info)
-    //! @param	size		Size (in bytes) to lock (see IDirect3DVertexBuffer9::Lock for more info)
-    //! @param	flags		Flags (see IDirect3DVertexBuffer9::Lock for more info)
+    //! @param	offset		Where to start the lock (see IDirect3DVertexBuffer11::Lock for more info)
+    //! @param	size		Size (in bytes) to lock (see IDirect3DVertexBuffer11::Lock for more info)
+    //! @param	flags		Flags (see IDirect3DVertexBuffer11::Lock for more info)
     //!
     //! @exception	ConstructorFailedException	The lock failed
 
-    VertexBufferLock(IDirect3DVertexBuffer9 * pVB, UINT offset = 0, UINT size = 0, DWORD flags = 0)
+    VertexBufferLock(IDirect3DVertexBuffer11 * pVB, UINT offset = 0, UINT size = 0, DWORD flags = 0)
         : pVB_(pVB)
     {
         pVB_->AddRef();
@@ -79,7 +79,7 @@ public:
 
 private:
 
-    IDirect3DVertexBuffer9 * const pVB_;
+    IDirect3DVertexBuffer11 * const pVB_;
     void * pBuffer_;
 };
 
@@ -96,13 +96,13 @@ public:
     //! The constructor locks the index buffer (and adds a reference).
     //!
     //! @param	pIB			Index buffer to lock
-    //! @param	offset		Where to start the lock (see IDirect3DIndexBuffer9::Lock for more info)
-    //! @param	size		Size (in bytes) to lock (see IDirect3DIndexBuffer9::Lock for more info)
-    //! @param	flags		Flags (see IDirect3DIndexBuffer9::Lock for more info)
+    //! @param	offset		Where to start the lock (see IDirect3DIndexBuffer11::Lock for more info)
+    //! @param	size		Size (in bytes) to lock (see IDirect3DIndexBuffer11::Lock for more info)
+    //! @param	flags		Flags (see IDirect3DIndexBuffer11::Lock for more info)
     //!
     //! @exception	ConstructorFailedException	The lock failed
 
-    IndexBufferLock(IDirect3DIndexBuffer9 * pIB, UINT offset = 0, UINT size = 0, DWORD flags = 0)
+    IndexBufferLock(IDirect3DIndexBuffer11 * pIB, UINT offset = 0, UINT size = 0, DWORD flags = 0)
         : pIB_(pIB)
     {
         pIB_->AddRef();
@@ -135,7 +135,7 @@ public:
 
 private:
 
-    IDirect3DIndexBuffer9 * const pIB_;
+    IDirect3DIndexBuffer11 * const pIB_;
     void * pBuffer_;
 };
 } // namespace Dxx

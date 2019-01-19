@@ -36,7 +36,7 @@
 #include <d3d9.h>
 #include <d3d9types.h>
 #include <d3dx9.h>
-#include <d3dx9math.h>
+#include <DirectXMath.h>
 #include <dxerr9.h>
 
 /* Standard Library header files																					*/

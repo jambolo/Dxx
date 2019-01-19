@@ -64,19 +64,19 @@ public:
 protected:
 
     //! Constructor
-    Light(IDirect3DDevice9 * pD3dDevice, int id);
+    Light(IDirect3DDevice11 * pD3dDevice, int id);
 
     //! Constructor
-    Light(IDirect3DDevice9 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight);
+    Light(IDirect3DDevice11 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight);
 
-    Light(IDirect3DDevice9 *    pD3dDevice,
+    Light(IDirect3DDevice11 *    pD3dDevice,
           int                   id,
           D3DLIGHTTYPE          type,
           D3DCOLORVALUE const & diffuse,
           D3DCOLORVALUE const & specular,
           D3DCOLORVALUE const & ambient,
-          D3DVECTOR const &     position,
-          D3DVECTOR const &     direction,
+          DirectX::XMFLOAT4 const &     position,
+          DirectX::XMFLOAT4 const &     direction,
           float                 range,
           float                 falloff,
           float                 attenuation0,
@@ -104,16 +104,16 @@ protected:
     D3DCOLORVALUE const & GetAmbient() const;
 
     //! Sets the light's position. Returns an HRESULT (See the docs for IDirect3DDevice::SetLight()).
-    HRESULT SetPosition(D3DVECTOR const & position);
+    HRESULT SetPosition(DirectX::XMFLOAT4 const & position);
 
     //! Returns the light's position
-    D3DVECTOR const & GetPosition() const;
+    DirectX::XMFLOAT4 const & GetPosition() const;
 
     //! Sets the light's direction. Returns an HRESULT (See the docs for IDirect3DDevice::SetLight()).
-    HRESULT SetDirection(D3DVECTOR const & direction);
+    HRESULT SetDirection(DirectX::XMFLOAT4 const & direction);
 
     //! Returns the light's direction
-    D3DVECTOR const & GetDirection() const;
+    DirectX::XMFLOAT4 const & GetDirection() const;
 
     //! Sets the range value. Returns an HRESULT (See the docs for IDirect3DDevice::SetLight()).
     HRESULT SetRange(float range);
@@ -155,7 +155,7 @@ protected:
     HRESULT SetPointValues(D3DCOLORVALUE const & diffuse,
                            D3DCOLORVALUE const & specular,
                            D3DCOLORVALUE const & ambient,
-                           D3DVECTOR const &     position,
+                           DirectX::XMFLOAT4 const &     position,
                            float                 range,
                            float                 attenuation0,
                            float                 attenuation1,
@@ -165,14 +165,14 @@ protected:
     HRESULT SetDirectionalValues(D3DCOLORVALUE const & diffuse,
                                  D3DCOLORVALUE const & specular,
                                  D3DCOLORVALUE const & ambient,
-                                 D3DVECTOR const &     direction);
+                                 DirectX::XMFLOAT4 const &     direction);
 
     //! Sets the values specific to spot lights. Returns an HRESULT (See the docs for IDirect3DDevice::SetLight()).
     HRESULT SetSpotValues(D3DCOLORVALUE const & diffuse,
                           D3DCOLORVALUE const & specular,
                           D3DCOLORVALUE const & ambient,
-                          D3DVECTOR const &     position,
-                          D3DVECTOR const &     direction,
+                          DirectX::XMFLOAT4 const &     position,
+                          DirectX::XMFLOAT4 const &     direction,
                           float                 range,
                           float                 falloff,
                           float                 attenuation0,
@@ -183,7 +183,7 @@ protected:
 
 private:
 
-    IDirect3DDevice9 * pD3dDevice_;                         // The D3D device the light is associated with
+    IDirect3DDevice11 * pD3dDevice_;                         // The D3D device the light is associated with
     int id_;                                                // Light Id
 
     static D3DLIGHT9 const defaultLightingParameters_;  // Default lighting parameters (same as D3D)
@@ -203,20 +203,20 @@ class SwissArmyLight : public Light
 public:
 
     //! Constructor
-    SwissArmyLight(IDirect3DDevice9 * pD3dDevice, int id);
+    SwissArmyLight(IDirect3DDevice11 * pD3dDevice, int id);
 
     //! Constructor
-    SwissArmyLight(IDirect3DDevice9 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight);
+    SwissArmyLight(IDirect3DDevice11 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight);
 
     //! Constructor
-    SwissArmyLight(IDirect3DDevice9 *    pD3dDevice,
+    SwissArmyLight(IDirect3DDevice11 *    pD3dDevice,
                    int                   id,
                    D3DLIGHTTYPE          type,
                    D3DCOLORVALUE const & diffuse,
                    D3DCOLORVALUE const & specular,
                    D3DCOLORVALUE const & ambient,
-                   D3DVECTOR const &     position,
-                   D3DVECTOR const &     direction,
+                   DirectX::XMFLOAT4 const &     position,
+                   DirectX::XMFLOAT4 const &     direction,
                    float                 range,
                    float                 falloff,
                    float                 attenuation0,
@@ -240,10 +240,10 @@ public:
     D3DCOLORVALUE const & GetSpecular() const;
     HRESULT               SetAmbient(D3DCOLORVALUE const & ambient);
     D3DCOLORVALUE const & GetAmbient() const;
-    HRESULT               SetPosition(D3DVECTOR const & position);
-    D3DVECTOR const &     GetPosition() const;
-    HRESULT               SetDirection(D3DVECTOR const & direction);
-    D3DVECTOR const &     GetDirection() const;
+    HRESULT               SetPosition(DirectX::XMFLOAT4 const & position);
+    DirectX::XMFLOAT4 const &     GetPosition() const;
+    HRESULT               SetDirection(DirectX::XMFLOAT4 const & direction);
+    DirectX::XMFLOAT4 const &     GetDirection() const;
     HRESULT               SetRange(float range);
     float                 GetRange() const;
     HRESULT               SetFalloff(float falloff);
@@ -274,13 +274,13 @@ class AmbientLight : public Light
 public:
 
     //! Constructor
-    AmbientLight(IDirect3DDevice9 * pD3dDevice, int id);
+    AmbientLight(IDirect3DDevice11 * pD3dDevice, int id);
 
     //! Constructor
-    AmbientLight(IDirect3DDevice9 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight);
+    AmbientLight(IDirect3DDevice11 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight);
 
     //! Constructor
-    AmbientLight(IDirect3DDevice9 *    pD3dDevice,
+    AmbientLight(IDirect3DDevice11 *    pD3dDevice,
                  int                   id,
                  D3DCOLORVALUE const & ambient);
 
@@ -317,18 +317,18 @@ class PointLight : public Light
 public:
 
     //! Constructor
-    PointLight(IDirect3DDevice9 * pD3dDevice, int id);
+    PointLight(IDirect3DDevice11 * pD3dDevice, int id);
 
     //! Constructor
-    PointLight(IDirect3DDevice9 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight);
+    PointLight(IDirect3DDevice11 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight);
 
     //! Constructor
-    PointLight(IDirect3DDevice9 *    pD3dDevice,
+    PointLight(IDirect3DDevice11 *    pD3dDevice,
                int                   id,
                D3DCOLORVALUE const & diffuse,
                D3DCOLORVALUE const & specular,
                D3DCOLORVALUE const & ambient,
-               D3DVECTOR const &     position,
+               DirectX::XMFLOAT4 const &     position,
                float                 range,
                float                 attenuation0,
                float                 attenuation1,
@@ -349,8 +349,8 @@ public:
     D3DCOLORVALUE const & GetSpecular() const;
     HRESULT               SetAmbient(D3DCOLORVALUE const & ambient);
     D3DCOLORVALUE const & GetAmbient() const;
-    HRESULT               SetPosition(D3DVECTOR const & position);
-    D3DVECTOR const &     GetPosition() const;
+    HRESULT               SetPosition(DirectX::XMFLOAT4 const & position);
+    DirectX::XMFLOAT4 const &     GetPosition() const;
     HRESULT               SetRange(float range);
     float                 GetRange() const;
     HRESULT               SetAttenuation(float a0, float a1, float a2);
@@ -363,7 +363,7 @@ public:
     HRESULT Set(D3DCOLORVALUE const & diffuse,
                 D3DCOLORVALUE const & specular,
                 D3DCOLORVALUE const & ambient,
-                D3DVECTOR const &     position,
+                DirectX::XMFLOAT4 const &     position,
                 float                 range,
                 float                 attenuation0,
                 float                 attenuation1,
@@ -384,18 +384,18 @@ class DirectionalLight : public Light
 public:
 
     //! Constructor
-    DirectionalLight(IDirect3DDevice9 * pD3dDevice, int id);
+    DirectionalLight(IDirect3DDevice11 * pD3dDevice, int id);
 
     //! Constructor
-    DirectionalLight(IDirect3DDevice9 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight);
+    DirectionalLight(IDirect3DDevice11 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight);
 
     //! Constructor
-    DirectionalLight(IDirect3DDevice9 *    pD3dDevice,
+    DirectionalLight(IDirect3DDevice11 *    pD3dDevice,
                      int                   id,
                      D3DCOLORVALUE const & diffuse,
                      D3DCOLORVALUE const & specular,
                      D3DCOLORVALUE const & ambient,
-                     D3DVECTOR const &     direction);
+                     DirectX::XMFLOAT4 const &     direction);
 
     //! Destructor
     virtual ~DirectionalLight();
@@ -412,8 +412,8 @@ public:
     D3DCOLORVALUE const & GetSpecular() const;
     HRESULT               SetAmbient(D3DCOLORVALUE const & ambient);
     D3DCOLORVALUE const & GetAmbient() const;
-    HRESULT               SetDirection(D3DVECTOR const & direction);
-    D3DVECTOR const &     GetDirection() const;
+    HRESULT               SetDirection(DirectX::XMFLOAT4 const & direction);
+    DirectX::XMFLOAT4 const &     GetDirection() const;
     HRESULT               SetD3dLight(D3DLIGHT9 const & d3dLight);
     D3DLIGHT9 const &     GetD3dLight() const;
     //@}
@@ -422,7 +422,7 @@ public:
     HRESULT Set(D3DCOLORVALUE const & diffuse,
                 D3DCOLORVALUE const & specular,
                 D3DCOLORVALUE const & ambient,
-                D3DVECTOR const &     direction);
+                DirectX::XMFLOAT4 const &     direction);
 
 private:
 
@@ -439,19 +439,19 @@ class SpotLight : public Light
 public:
 
     //! Constructor
-    SpotLight(IDirect3DDevice9 * pD3dDevice, int id);
+    SpotLight(IDirect3DDevice11 * pD3dDevice, int id);
 
     //! Constructor
-    SpotLight(IDirect3DDevice9 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight);
+    SpotLight(IDirect3DDevice11 * pD3dDevice, int id, D3DLIGHT9 const & d3dLight);
 
     //! Constructor
-    SpotLight(IDirect3DDevice9 *    pD3dDevice,
+    SpotLight(IDirect3DDevice11 *    pD3dDevice,
               int                   id,
               D3DCOLORVALUE const & diffuse,
               D3DCOLORVALUE const & specular,
               D3DCOLORVALUE const & ambient,
-              D3DVECTOR const &     position,
-              D3DVECTOR const &     direction,
+              DirectX::XMFLOAT4 const &     position,
+              DirectX::XMFLOAT4 const &     direction,
               float                 range,
               float                 falloff,
               float                 attenuation0,
@@ -475,10 +475,10 @@ public:
     D3DCOLORVALUE const & GetSpecular() const;
     HRESULT               SetAmbient(D3DCOLORVALUE const & ambient);
     D3DCOLORVALUE const & GetAmbient() const;
-    HRESULT               SetPosition(D3DVECTOR const & position);
-    D3DVECTOR const &     GetPosition() const;
-    HRESULT               SetDirection(D3DVECTOR const & direction);
-    D3DVECTOR const &     GetDirection() const;
+    HRESULT               SetPosition(DirectX::XMFLOAT4 const & position);
+    DirectX::XMFLOAT4 const &     GetPosition() const;
+    HRESULT               SetDirection(DirectX::XMFLOAT4 const & direction);
+    DirectX::XMFLOAT4 const &     GetDirection() const;
     HRESULT               SetRange(float range);
     float                 GetRange() const;
     HRESULT               SetFalloff(float falloff);
@@ -497,8 +497,8 @@ public:
     HRESULT Set(D3DCOLORVALUE const & diffuse,
                 D3DCOLORVALUE const & specular,
                 D3DCOLORVALUE const & ambient,
-                D3DVECTOR const &     position,
-                D3DVECTOR const &     direction,
+                DirectX::XMFLOAT4 const &     position,
+                DirectX::XMFLOAT4 const &     direction,
                 float                 range,
                 float                 falloff,
                 float                 attenuation0,

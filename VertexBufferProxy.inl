@@ -27,7 +27,7 @@ inline VertexBufferProxy::~VertexBufferProxy()
     pBuffer_->Release();
 }
 
-inline IDirect3DVertexBuffer9 * VertexBufferProxy::GetVertexBuffer() const
+inline IDirect3DVertexBuffer11 * VertexBufferProxy::GetVertexBuffer() const
 {
     return pBuffer_;
 }
@@ -68,13 +68,14 @@ inline VertexBufferProxy::VRef VertexBufferProxy::operator [](int i) const
 /*												V R E F B A S E														*/
 
 inline VertexBufferProxy::VRefBase::VRefBase(VertexBufferProxy const * pProxy, void * pVertex)
-    : pProxy_(pProxy), pVertex_(pVertex)
+    : pProxy_(pProxy)
+    , pVertex_(pVertex)
 {
 }
 
-inline D3DXVECTOR3 & VertexBufferProxy::VRefBase::Position() const
+inline DirectX::XMFLOAT4 & VertexBufferProxy::VRefBase::Position() const
 {
-    return *(D3DXVECTOR3 *)((char *)pVertex_ + 0);
+    return *(DirectX::XMFLOAT4 *)((char *)pVertex_ + 0);
 }
 
 inline float & VertexBufferProxy::VRefBase::W() const
@@ -107,9 +108,9 @@ inline DWORD & VertexBufferProxy::VRefBase::BlendIndexes() const
     return *(DWORD *)((char *)pVertex_ + pProxy_->blendIndexesOffset_);
 }
 
-inline D3DXVECTOR3 & VertexBufferProxy::VRefBase::Normal() const
+inline DirectX::XMFLOAT4 & VertexBufferProxy::VRefBase::Normal() const
 {
-    return *(D3DXVECTOR3 *)((char *)pVertex_ + pProxy_->normalOffset_);
+    return *(DirectX::XMFLOAT4 *)((char *)pVertex_ + pProxy_->normalOffset_);
 }
 
 inline float & VertexBufferProxy::VRefBase::PointSize() const

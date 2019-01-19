@@ -28,9 +28,9 @@ namespace Dxx
 XMesh::XMesh(auto_ptr<ID3DXMesh> qMesh,
              ID3DXBuffer const * pMaterialBuffer, int numMaterials,
              ID3DXBuffer const * pAdjacencyBuffer,
-             IDirect3DDevice9 * pD3dDevice)
-    : pD3dDevice_(pD3dDevice),
-    pMesh_(qMesh.release())
+             IDirect3DDevice11 * pD3dDevice)
+    : pD3dDevice_(pD3dDevice)
+    , pMesh_(qMesh.release())
 {
     assert(pMesh_ != 0);
 
@@ -83,7 +83,7 @@ XMesh::~XMesh()
 
     for (TextureList::iterator it = textures_.begin(); it != textures_.end(); ++it)
     {
-        IDirect3DTexture9 * const pT = *it;
+        IDirect3DTexture11 * const pT = *it;
         if (pT != 0)
             pT->Release();
     }
@@ -101,8 +101,8 @@ HRESULT XMesh::Draw()
     //// Draw the mesh using the current vertex/pixel shader
     //// This means either Cg or D3D has to call SetVertexShader
     // const int VERTEX_SIZE = 4*8;
-    // IDirect3DIndexBuffer9	pIndexBuffer;
-    // IDirect3DVertexBuffer9	pVertexBuffer;
+    // IDirect3DIndexBuffer11	pIndexBuffer;
+    // IDirect3DVertexBuffer11	pVertexBuffer;
     // pMesh_->GetIndexBuffer( &pIndexBuffer );
     // pD3dDevice->SetIndices( pIndexBuffer, 0);
     // pMesh_->GetVertexBuffer( &pVertexBuffer );
@@ -133,7 +133,7 @@ HRESULT XMesh::Draw()
 //! @param	pFilename	Name of the file containing the mesh.
 //! @param	pD3dDevice	Device to be associated with the mesh.
 
-auto_ptr<XMesh> XMesh::Create(char const * pFilename, IDirect3DDevice9 * pD3dDevice)
+auto_ptr<XMesh> XMesh::Create(char const * pFilename, IDirect3DDevice11 * pD3dDevice)
 {
     ID3DXBuffer * pMaterialBuffer;
     DWORD         numMaterials;

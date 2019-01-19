@@ -17,11 +17,11 @@
 
 namespace Dxx
 {
-TextureManager::TextureManager()
-{
-}
+    TextureManager::TextureManager()
+    {
+    }
 
-TextureManager::~TextureManager()
-{
-}
+    TextureManager::~TextureManager()
+    {
+    }
 } // namespace Dxx

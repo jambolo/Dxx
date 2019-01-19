@@ -30,13 +30,13 @@ public:
     RandomDirection(Seed seed);
 
     //! Returns a unit vector with a random direction.
-    D3DXVECTOR3 Get();
+    DirectX::XMFLOAT4 Get();
 
     //! Returns a unit vector with a random direction limited to a cone centered on the X axis.
-    D3DXVECTOR3 Get(float a);
+    DirectX::XMFLOAT4 Get(float a);
 
     //! Returns a unit vector with a random direction limited to a pyramid centered on the X axis.
-    D3DXVECTOR3 Get(float a, float b);
+    DirectX::XMFLOAT4 Get(float a, float b);
 
     //! Sets the state.
     void SetState(State const & state);
@@ -58,7 +58,7 @@ public:
     RandomOrientation(Seed seed);
 
     //! Returns a random orientation.
-    D3DXQUATERNION Get();
+    DirectX::XMFLOAT4 Get();
 
     //! Sets the state.
     void SetState(State const & state);
