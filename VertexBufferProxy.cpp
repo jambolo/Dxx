@@ -15,11 +15,11 @@
 
 #include "VertexBufferProxy.h"
 
+#if 0
 #if defined(_DEBUG)
 #define D3D_DEBUG_INFO
 #endif
-#include <d3d9.h>
-#include <d3dx9.h>
+#include <d3d11.h>
 
 namespace Dxx
 {
@@ -39,7 +39,7 @@ VertexBufferProxy::VertexBufferProxy(ID3DXMesh * pMesh)
 
 //! @param	pBuffer		Vertex buffer to proxy
 
-VertexBufferProxy::VertexBufferProxy(IDirect3DVertexBuffer11 * pBuffer)
+VertexBufferProxy::VertexBufferProxy(ID3D11Buffer * pBuffer)
     : pBuffer_(pBuffer)
 {
     pBuffer_->AddRef();
@@ -291,3 +291,4 @@ void VertexBufferProxy::InitializeOffsets()
     }
 }
 } // namespace Dxx
+#endif

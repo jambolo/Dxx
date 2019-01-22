@@ -15,27 +15,33 @@
 
 #include "Random.h"
 
+#include "Misc/Assert.h"
+#include "MyMath/FastMath.h"
+#include "MyMath/Constants.h"
+
+#include <DirectXMath.h>
+
 namespace Dxx
 {
 //!
 //! @param	seed		Initial seed.
 
 RandomDirection::RandomDirection(Seed seed)
-    : RandomFloat(seed)
+    : rng_(seed)
 {
 }
 
-DirectX::XMFLOAT4 RandomDirection::Get()
+DirectX::XMFLOAT3 RandomDirection::operator ()()
 {
-    float const r = RandomFloat::Get(float(Math::TWO_PI));
-    float const t = RandomFloat::Get(float(Math::TWO_PI));
+    float r = rng_(float(DirectX::XM_2PI));
+    float t = rng_(float(DirectX::XM_2PI));
 
     float sr, cr, st, ct;
 
-    Math::fsincos(r, &sr, &cr);
-    Math::fsincos(t, &st, &ct);
+    MyMath::fsincos(r, &sr, &cr);
+    MyMath::fsincos(t, &st, &ct);
 
-    return DirectX::XMFLOAT4(ct, cr * st, sr * st);
+    return { ct, cr * st, sr * st };
 }
 
 //! This function returns a random unit vector whose angle from the X axis is uniformly-distributed in range
@@ -45,18 +51,18 @@ DirectX::XMFLOAT4 RandomDirection::Get()
 //!
 //! @return	A unit vector.
 
-DirectX::XMFLOAT4 RandomDirection::Get(float a)
+DirectX::XMFLOAT3 RandomDirection::operator ()(float a)
 {
-    float const ca = cosf(a);
-    float const cr = 1.f - RandomFloat::Get(1.f - ca);
-    float const sr = sqrtf(1.f - cr * cr);
-    float const t  = RandomFloat::Get(float(Math::TWO_PI));
+    float ca = cosf(a);
+    float cr = 1.f - rng_(1.f - ca);
+    float sr = sqrtf(1.f - cr * cr);
+    float t  = rng_(float(DirectX::XM_2PI));
 
     float st, ct;
 
-    Math::fsincos(t, &st, &ct);
+    MyMath::fsincos(t, &st, &ct);
 
-    return DirectX::XMFLOAT4(cr, ct * sr, st * sr);
+    return { cr, ct * sr, st * sr };
 }
 
 //! This function returns a random unit vector whose angle from the XZ plane is uniformly-distributed in range
@@ -68,12 +74,12 @@ DirectX::XMFLOAT4 RandomDirection::Get(float a)
 //!
 //! @return	A unit vector.
 
-DirectX::XMFLOAT4 RandomDirection::Get(float a, float b)
+DirectX::XMFLOAT3 RandomDirection::operator ()(float a, float b)
 {
     assert(a != 0.f);
-    assert_limits(0.f, a, Math::PI);
+    assert_limits(0.f, a, DirectX::XM_PI);
     assert(b != 0.f);
-    assert_limits(0.f, b, Math::PI_OVER_2);
+    assert_limits(0.f, b, DirectX::XM_PIDIV2);
 
     // Source: http://mathworld.wolfram.com/SpherePointPicking.html
     //
@@ -89,64 +95,67 @@ DirectX::XMFLOAT4 RandomDirection::Get(float a, float b)
     // sf = sin(f) = sqrt( 1. - cf*cf )
     // v = [ cf * ct, sf, cf * st ]
 
-    float const t = RandomFloat::Get(-a, a);
-    float const cf = RandomFloat::Get(-b, b) / float(Math::PI_OVER_2);
-    float const sf = sqrtf(1.f - cf * cf);
+    float t = rng_(-a, a);
+    float cf = rng_(-b, b) / DirectX::XM_PIDIV2;
+    float sf = sqrtf(1.f - cf * cf);
     float       st, ct;
 
-    Math::fsincos(t, &st, &ct);
+    MyMath::fsincos(t, &st, &ct);
 
-    return DirectX::XMFLOAT4(cf * ct, sf, cf * st);
+    return { cf * ct, sf, cf * st };
 }
 
 //!
 //! @param	state	New state.
-void RandomDirection::SetState(State const & state)
+void RandomDirection::setState(State const & state)
 {
-    RandomFloat::SetState(state);
+    rng_.setState(state);
 }
 
-RandomDirection::State const & RandomDirection::GetState() const
+RandomDirection::State RandomDirection::state() const
 {
-    return RandomFloat::GetState();
+    return rng_.state();
 }
 
 //!
 //! @param	seed		Initial seed.
 
 RandomOrientation::RandomOrientation(Seed seed)
-    : RandomFloat(seed)
+    : rng_(seed)
 {
 }
 
-DirectX::XMFLOAT4 RandomOrientation::Get()
+DirectX::XMFLOAT4 RandomOrientation::operator ()()
 {
-    float const r = RandomFloat::Get(float(Math::TWO_PI));
-    float const t = RandomFloat::Get(float(Math::TWO_PI));
+    float r = rng_(float(DirectX::XM_2PI));
+    float t = rng_(float(DirectX::XM_2PI));
 
     float sr, cr, st, ct;
 
-    Math::fsincos(r, &sr, &cr);
-    Math::fsincos(t, &st, &ct);
+    MyMath::fsincos(r, &sr, &cr);
+    MyMath::fsincos(t, &st, &ct);
 
-    DirectX::XMFLOAT4 const direction = DirectX::XMFLOAT4(ct, cr * st, sr * st);
-    float const       a         = RandomFloat::Get(float(Math::TWO_PI));
-    DirectX::XMFLOAT4    q;
+    DirectX::XMFLOAT3 direction(ct, cr * st, sr * st);
+    float             a = rng_(DirectX::XM_2PI);
+    DirectX::XMVECTOR direction_simd(DirectX::XMLoadFloat3(&direction));
 
-    D3DXQuaternionRotationAxis(&q, &direction, a);
+    DirectX::XMVECTOR q_simd = DirectX::XMQuaternionRotationAxis(direction_simd, a);
+
+    DirectX::XMFLOAT4 q;
+    DirectX::XMStoreFloat4(&q, q_simd);
 
     return q;
 }
 
 //!
 //! @param	state	New state.
-void RandomOrientation::SetState(State const & state)
+void RandomOrientation::setState(State const & state)
 {
-    RandomFloat::SetState(state);
+    rng_.setState(state);
 }
 
-RandomOrientation::State const & RandomOrientation::GetState() const
+RandomOrientation::State RandomOrientation::state() const
 {
-    return RandomFloat::GetState();
+    return rng_.state();
 }
 } // namespace Dxx

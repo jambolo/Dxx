@@ -1,15 +1,4 @@
-/*********************************************************************************************************************
-
-                                                 PrecompiledHeaders.h
-
-                                            Copyright 2002, John J. Bolton
-    --------------------------------------------------------------------------------------------------------------
-
-    $Header: //depot/Libraries/Dxx/PrecompiledHeaders.h#14 $
-
-    $NoKeywords: $
-
-*********************************************************************************************************************/
+#if 0
 
 /* Warnings to be ignored																							*/
 
@@ -18,9 +7,6 @@
 #pragma warning( disable: 4512 )    // 'class' : assignment operator could not be generated
 
 /* Windows header files																								*/
-
-#define WIN32_LEAN_AND_MEAN
-#define NOMINMAX
 
 #include <atlbase.h>
 #include <atlcomcli.h>
@@ -33,11 +19,11 @@
 #if defined(_DEBUG)
 #define D3D_DEBUG_INFO
 #endif
-#include <d3d9.h>
-#include <d3d9types.h>
-#include <d3dx9.h>
+#include <d3d11.h>
+//#include <d3d11types.h>
+//#include <d3dx9.h>
 #include <DirectXMath.h>
-#include <dxerr9.h>
+//#include <dxerr9.h>
 
 /* Standard Library header files																					*/
 
@@ -64,3 +50,5 @@
 #include <Wx/Wx.h>
 
 /* Project header files																								*/
+
+#endif

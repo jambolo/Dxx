@@ -1,20 +1,6 @@
-/** @file *//********************************************************************************************************
-
-                                                   VertexBuffer.cpp
-
-                                            Copyright 2003, John J. Bolton
-    --------------------------------------------------------------------------------------------------------------
-
-    $Header: //depot/Libraries/Dxx/VertexBuffer.cpp#12 $
-
-    $NoKeywords: $
-
-********************************************************************************************************************/
-
 #include "PrecompiledHeaders.h"
 
 #include "VertexBuffer.h"
-#include "VertexBufferLock.h"
 
 namespace Dxx
 {
@@ -27,17 +13,19 @@ namespace Dxx
 //!
 //! @note	Release() must be called to release the buffer if it was successfully created
 
-HRESULT CreateStaticVertexBuffer(IDirect3DDevice11 * pDevice,
-                                 void const * pData, UINT size,
-                                 DWORD fvf, IDirect3DVertexBuffer11 ** ppVB,
-                                 D3DPOOL pool /* = D3DPOOL_MANAGED*/)
+HRESULT CreateStaticVertexBuffer(ID3D11Device * pDevice,
+                                 void const * pData, size_t size,
+                                 DWORD fvf,
+                                 ID3D11Buffer ** ppVB/*,
+                                                        D3DPOOL pool = D3DPOOL_MANAGED*/)
 {
+#if 0
     assert(pData != 0);
     assert(size > 0);
     assert(ppVB != 0);
 
-    IDirect3DVertexBuffer11 * pVB;
-    HRESULT hr;
+    ID3D11Buffer * pVB;
+    HRESULT        hr;
 
     // Create the vertex buffer
 
@@ -64,6 +52,8 @@ HRESULT CreateStaticVertexBuffer(IDirect3DDevice11 * pDevice,
     *ppVB = pVB;
 
     return D3D_OK;
+#endif // if 0
+    return S_FALSE;
 }
 
 //! @param	pDevice		Device the vertex buffer is to be associated with.
@@ -75,18 +65,19 @@ HRESULT CreateStaticVertexBuffer(IDirect3DDevice11 * pDevice,
 //!
 //! @note	Release() must be called to release the buffer if it was successfully created
 
-HRESULT CreateStaticIndexBuffer(IDirect3DDevice11 * pDevice,
-                                void const * pData, UINT size,
-                                D3DFORMAT format,
-                                IDirect3DIndexBuffer11 ** ppIB,
-                                D3DPOOL pool /* = D3DPOOL_MANAGED*/)
+HRESULT CreateStaticIndexBuffer(ID3D11Device * pDevice,
+                                void const * pData, size_t size,
+                                DXGI_FORMAT format,
+                                ID3D11Buffer ** ppIB/*,
+                                                       D3DPOOL pool*//* = D3DPOOL_MANAGED*/)
 {
+#if 0
     assert(pData != 0);
     assert(size > 0);
     assert(ppIB != 0);
 
-    IDirect3DIndexBuffer11 * pIB;
-    HRESULT hr;
+    ID3D11Buffer * pIB;
+    HRESULT        hr;
 
     // Create the index buffer
 
@@ -113,5 +104,7 @@ HRESULT CreateStaticIndexBuffer(IDirect3DDevice11 * pDevice,
     *ppIB = pIB;
 
     return D3D_OK;
+#endif // if 0
+    return S_FALSE;
 }
 } // namespace Dxx

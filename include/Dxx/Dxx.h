@@ -21,7 +21,6 @@
 #include "VertexBuffer.h"
 #include "VertexBufferLock.h"
 #include "VertexBufferProxy.h"
-#include "XMesh.h"
 
 //! @defgroup	Dxx		DirectX Extensions
 //! Home-brew extensions to DirectX
