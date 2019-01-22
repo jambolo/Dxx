@@ -291,4 +291,4 @@ void VertexBufferProxy::InitializeOffsets()
     }
 }
 } // namespace Dxx
-#endif
+#endif // if 0

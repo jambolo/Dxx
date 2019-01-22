@@ -21,14 +21,14 @@ HRESULT CreateStaticVertexBuffer(ID3D11Device * pDevice,
                                  void const * pData, size_t size,
                                  DWORD fvf,
                                  ID3D11Buffer ** ppVB/*,
-                                 D3DPOOL pool = D3DPOOL_MANAGED*/);
+                                                        D3DPOOL pool = D3DPOOL_MANAGED*/);
 
 //! Creates a static vertex buffer. Returns the result code.
 HRESULT CreateStaticIndexBuffer(ID3D11Device * pDevice,
                                 void const * pData, size_t size,
                                 DXGI_FORMAT format,
                                 ID3D11Buffer ** ppVB/*,
-                                D3DPOOL pool = D3DPOOL_MANAGED*/);
+                                                       D3DPOOL pool = D3DPOOL_MANAGED*/);
 //@}
 } // namespace Dxx
 

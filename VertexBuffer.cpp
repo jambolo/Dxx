@@ -52,7 +52,7 @@ HRESULT CreateStaticVertexBuffer(ID3D11Device * pDevice,
     *ppVB = pVB;
 
     return D3D_OK;
-#endif // if 0
+#endif  // if 0
     return S_FALSE;
 }
 
@@ -104,7 +104,7 @@ HRESULT CreateStaticIndexBuffer(ID3D11Device * pDevice,
     *ppIB = pIB;
 
     return D3D_OK;
-#endif // if 0
+#endif  // if 0
     return S_FALSE;
 }
 } // namespace Dxx

@@ -3,8 +3,8 @@
 #if !defined(DXX_CAMERA_H)
 #define DXX_CAMERA_H
 
-#include "Dxx/Frame.h"
 #include "Dxx/Dxx.h"
+#include "Dxx/Frame.h"
 #include "MyMath/Frustum.h"
 #include <DirectXMath.h>
 
@@ -20,18 +20,18 @@ class Camera
 public:
 
     //! Constructor
-    Camera(float              angleOfView,
-           float              nearDistance,
-           float              farDistance,
-           float              aspectRatio,
-           Frame const &      frame = Frame::identity());
+    Camera(float         angleOfView,
+           float         nearDistance,
+           float         farDistance,
+           float         aspectRatio,
+           Frame const & frame = Frame::identity());
 
     //! Constructor
-    Camera(float                  angleOfView,
-           float                  nearDistance,
-           float                  farDistance,
-           float                  aspectRatio,
-           DirectX::XMFLOAT3 const &    position,
+    Camera(float                     angleOfView,
+           float                     nearDistance,
+           float                     farDistance,
+           float                     aspectRatio,
+           DirectX::XMFLOAT3 const & position,
            DirectX::XMFLOAT4 const & orientation = QuaternionIdentity());
 
     // Destructor

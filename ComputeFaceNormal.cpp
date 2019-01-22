@@ -26,9 +26,9 @@ namespace Dxx
 //! @return     The face normal
 
 XMFLOAT3 ComputeFaceNormal(XMFLOAT3 const & v0,
-                                      XMFLOAT3 const & v1,
-                                      XMFLOAT3 const & v2,
-                                      XMFLOAT3 *       pN /*= nullptr*/)
+                           XMFLOAT3 const & v1,
+                           XMFLOAT3 const & v2,
+                           XMFLOAT3 *       pN /*= nullptr*/)
 {
     XMVECTOR v0_simd(XMLoadFloat3(&v0));
     XMVECTOR v1_simd(XMLoadFloat3(&v1));
@@ -38,7 +38,7 @@ XMFLOAT3 ComputeFaceNormal(XMFLOAT3 const & v0,
     XMVECTOR v1v2_simd(v2_simd - v1_simd);
 
     XMVECTOR normal_simd = XMVector3Normalize(XMVector3Cross(v0v1_simd, v1v2_simd));
-    
+
     XMFLOAT3 normal;
     if (!pN)
         pN = &normal;
@@ -55,12 +55,12 @@ XMFLOAT3 ComputeFaceNormal(XMFLOAT3 const & v0,
 //!					values to the actual Z values.
 //! @param	pN		Where to put the normal (if not nullptr)
 
-XMFLOAT3 ComputeGridNormal(float               z1,
-                                    float               z2,
-                                    float               z3,
-                                    float               z4,
-                                    float               scale,
-                                    XMFLOAT3 * pN /*= nullptr*/)
+XMFLOAT3 ComputeGridNormal(float      z1,
+                           float      z2,
+                           float      z3,
+                           float      z4,
+                           float      scale,
+                           XMFLOAT3 * pN /*= nullptr*/)
 {
 //	The 4 adjacent points in a uniform grid: A, B, C, D
 //

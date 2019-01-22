@@ -16,8 +16,8 @@
 #include "Random.h"
 
 #include "Misc/Assert.h"
-#include "MyMath/FastMath.h"
 #include "MyMath/Constants.h"
+#include "MyMath/FastMath.h"
 
 #include <DirectXMath.h>
 
@@ -98,7 +98,7 @@ DirectX::XMFLOAT3 RandomDirection::operator ()(float a, float b)
     float t = rng_(-a, a);
     float cf = rng_(-b, b) / DirectX::XM_PIDIV2;
     float sf = sqrtf(1.f - cf * cf);
-    float       st, ct;
+    float st, ct;
 
     MyMath::fsincos(t, &st, &ct);
 
@@ -136,7 +136,7 @@ DirectX::XMFLOAT4 RandomOrientation::operator ()()
     MyMath::fsincos(t, &st, &ct);
 
     DirectX::XMFLOAT3 direction(ct, cr * st, sr * st);
-    float             a = rng_(DirectX::XM_2PI);
+    float a = rng_(DirectX::XM_2PI);
     DirectX::XMVECTOR direction_simd(DirectX::XMLoadFloat3(&direction));
 
     DirectX::XMVECTOR q_simd = DirectX::XMQuaternionRotationAxis(direction_simd, a);

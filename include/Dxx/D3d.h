@@ -144,17 +144,17 @@ enum
 
 //! Computes the normal of a face
 DirectX::XMFLOAT3 ComputeFaceNormal(DirectX::XMFLOAT3 const & v0,
-                                      DirectX::XMFLOAT3 const & v1,
-                                      DirectX::XMFLOAT3 const & v2,
-                                      DirectX::XMFLOAT3 *       pN);
+                                    DirectX::XMFLOAT3 const & v1,
+                                    DirectX::XMFLOAT3 const & v2,
+                                    DirectX::XMFLOAT3 *       pN);
 
 //! Computes the normal for a vertex in a uniform axis-aligned grid
 DirectX::XMFLOAT3 ComputeGridNormal(float               z1,
-                                      float               z2,
-                                      float               z3,
-                                      float               z4,
-                                      float               scale,
-                                      DirectX::XMFLOAT3 * pN = nullptr);
+                                    float               z2,
+                                    float               z3,
+                                    float               z4,
+                                    float               scale,
+                                    DirectX::XMFLOAT3 * pN = nullptr);
 
 #if 0
 //! Creates a full-screen D3D device. Returns a result code.

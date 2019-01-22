@@ -324,7 +324,7 @@ inline HRESULT VertexBufferProxy::Lock(UINT OffsetToLock, UINT SizeToLock, DWORD
 
 inline HRESULT VertexBufferProxy::Unlock()
 {
-    pData_ = 0;
+    pData_      = 0;
     lockOffset_ = 0;
     return pBuffer_->Unlock();
 }
@@ -531,8 +531,8 @@ inline VertexBufferProxy::VPtr::operator void *() const
 }
 } // namespace Dxx
 
-  //! @param	vptr	Operand
-  //! @param	i		Operand
+//! @param	vptr	Operand
+//! @param	i		Operand
 
 inline Dxx::VertexBufferProxy::VPtr operator +(Dxx::VertexBufferProxy::VPtr const & vptr, int i)
 {
@@ -573,6 +573,6 @@ inline VertexBufferProxy::VPtr VertexBufferProxy::VRef::operator &()
     return VPtr(pProxy_, pVertex_);
 }
 } // namespace Dxx
-#endif
+#endif // if 0
 
 #endif // !defined(DXX_VERTEXBUFFERPROXY_H)

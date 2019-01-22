@@ -20,17 +20,17 @@ namespace Dxx
 //! @return		S_OK is returned if successful, S_FALSE is returned if the desired display device
 //!				is not available. Any other value indicates an error.
 
-HRESULT CreateD3dFullScreenDevice(IDirect3D9 *        pD3d,
-                                  HWND                hWnd,
-                                  int                 width,
-                                  int                 height,
-                                  D3DFORMAT           format,
+HRESULT CreateD3dFullScreenDevice(IDirect3D9 *    pD3d,
+                                  HWND            hWnd,
+                                  int             width,
+                                  int             height,
+                                  D3DFORMAT       format,
                                   ID3D11Device ** ppDevice,
-                                  D3DFORMAT           zBufferFormat /* = D3DFMT_D24S8 */,
-                                  UINT                adapter /* = D3DADAPTER_DEFAULT*/,
-                                  UINT                swapInterval /* = D3DPRESENT_INTERVAL_DEFAULT */,
-                                  D3DDEVTYPE          deviceType /* = D3DDEVTYPE_HAL*/,
-                                  DWORD               behavior          /* =
+                                  D3DFORMAT       zBufferFormat /* = D3DFMT_D24S8 */,
+                                  UINT            adapter /* = D3DADAPTER_DEFAULT*/,
+                                  UINT            swapInterval /* = D3DPRESENT_INTERVAL_DEFAULT */,
+                                  D3DDEVTYPE      deviceType /* = D3DDEVTYPE_HAL*/,
+                                  DWORD           behavior              /* =
                                                                            D3DCREATE_HARDWARE_VERTEXPROCESSING|D3DCREATE_PUREDEVICE*/
 )
 {
@@ -76,14 +76,14 @@ HRESULT CreateD3dFullScreenDevice(IDirect3D9 *        pD3d,
 //! @param	deviceType		Device type.
 //! @param	behavior		Behavior (see docs for <tt>IDirect3D9::CreateDevice</tt>).
 
-HRESULT CreateD3dWindowedDevice(IDirect3D9 *        pD3d,
-                                HWND                hWnd,
+HRESULT CreateD3dWindowedDevice(IDirect3D9 *    pD3d,
+                                HWND            hWnd,
                                 ID3D11Device ** ppDevice,
-                                D3DFORMAT           zBufferFormat /* = D3DFMT_UNKNOWN */,
-                                UINT                adapter /* = D3DADAPTER_DEFAULT*/,
-                                UINT                swapInterval /* = D3DPRESENT_INTERVAL_DEFAULT */,
-                                D3DDEVTYPE          deviceType /* = D3DDEVTYPE_HAL*/,
-                                DWORD               behavior            /* =
+                                D3DFORMAT       zBufferFormat /* = D3DFMT_UNKNOWN */,
+                                UINT            adapter /* = D3DADAPTER_DEFAULT*/,
+                                UINT            swapInterval /* = D3DPRESENT_INTERVAL_DEFAULT */,
+                                D3DDEVTYPE      deviceType /* = D3DDEVTYPE_HAL*/,
+                                DWORD           behavior                /* =
                                                                            D3DCREATE_HARDWARE_VERTEXPROCESSING|D3DCREATE_PUREDEVICE*/
 )
 {
@@ -240,7 +240,7 @@ HRESULT AssembleVertexShader(ID3D11Device * pDevice,
                              D3DXMACRO const * pDefines, ID3DXInclude * pInclude, DWORD Flags,
                              IDirect3DVertexShader9 ** ppShader)
 {
-    HRESULT       hr;
+    HRESULT        hr;
     ID3D11Buffer * pCode      = 0;
     ID3D11Buffer * pErrorMsgs = 0;
 
@@ -268,7 +268,7 @@ HRESULT AssemblePixelShader(ID3D11Device * pDevice,
                             D3DXMACRO const * pDefines, ID3DXInclude * pInclude, DWORD Flags,
                             IDirect3DPixelShader9 ** ppPixelShader)
 {
-    HRESULT       hr;
+    HRESULT        hr;
     ID3D11Buffer * pCode      = 0;
     ID3D11Buffer * pErrorMsgs = 0;
 
@@ -298,7 +298,7 @@ HRESULT AssemblePixelShader(ID3D11Device * pDevice,
 //! @param	arg2		Source 2 (see docs for @c D3DTA)
 //! @param	pTexture	Texture, or 0 if not used
 
-HRESULT SetTextureStage(ID3D11Device *      pD3dDevice,
+HRESULT SetTextureStage(ID3D11Device *          pD3dDevice,
                         int                     stage,
                         D3DTEXTUREOP            op,
                         DWORD                   arg1 /* = D3DTA_TEXTURE*/,
@@ -323,7 +323,7 @@ HRESULT SetTextureStage(ID3D11Device *      pD3dDevice,
 
     return hr;
 }
-#endif
+#endif // if 0
 
 //! @param	m			Matrix to check
 //! @param	tolerance	Maximum allowed deviation

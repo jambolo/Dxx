@@ -59,7 +59,7 @@ public:
 
     // non-copyable
     VertexBufferLock(VertexBufferLock const &) = delete;
-    VertexBufferLock & operator=(VertexBufferLock const &) = delete;
+    VertexBufferLock & operator =(VertexBufferLock const &) = delete;
 
     //! Returns a pointer to the locked buffer data
     void * GetLockedBuffer()
@@ -119,7 +119,7 @@ public:
 
     // non-copyable
     IndexBufferLock(IndexBufferLock const &) = delete;
-    IndexBufferLock & operator=(IndexBufferLock const &) = delete;
+    IndexBufferLock & operator =(IndexBufferLock const &) = delete;
 
     //! Returns a pointer to the locked buffer data
     void * GetLockedBuffer()
@@ -133,6 +133,6 @@ private:
     void * pBuffer_;
 };
 } // namespace Dxx
-#endif
+#endif // if 0
 
 #endif // !defined(DXX_VERTEXBUFFERLOCK_H)

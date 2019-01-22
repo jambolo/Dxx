@@ -29,14 +29,14 @@ namespace Dxx
 //! @param	rotation		Rotation component as a quaternion
 //! @param	scale			Scale component as a 3D vector
 
-Frame::Frame(XMFLOAT3 const &    translation,
+Frame::Frame(XMFLOAT3 const & translation,
              XMFLOAT4 const & rotation,
-             XMFLOAT3 const &    scale /* = XMFLOAT3( 1.0f, 1.0f, 1.0f )*/)
+             XMFLOAT3 const & scale /* = XMFLOAT3( 1.0f, 1.0f, 1.0f )*/)
 {
     XMVECTORF32 q_simd{ rotation.x, rotation.y, rotation.z, rotation.w };
-    XMMATRIX t_simd = XMMatrixTranslation(translation.x, translation.y, translation.z);
-    XMMATRIX r_simd = XMMatrixRotationQuaternion(q_simd);
-    XMMATRIX s_simd = XMMatrixScaling(scale.x, scale.y, scale.z);
+    XMMATRIX    t_simd = XMMatrixTranslation(translation.x, translation.y, translation.z);
+    XMMATRIX    r_simd = XMMatrixRotationQuaternion(q_simd);
+    XMMATRIX    s_simd = XMMatrixScaling(scale.x, scale.y, scale.z);
 
     XMMATRIX m_simd = s_simd * r_simd * t_simd;
 
@@ -65,7 +65,7 @@ Frame & Frame::translate(XMFLOAT3 const & t)
 
 Frame & Frame::rotate(XMFLOAT4 const & r)
 {
-    XMMATRIX m_simd = XMLoadFloat4x4(&m_);
+    XMMATRIX    m_simd = XMLoadFloat4x4(&m_);
     XMVECTORF32 q_simd{ r.x, r.y, r.z, r.w };
 
     XMMATRIX r_simd = XMMatrixRotationQuaternion(q_simd);
@@ -258,7 +258,7 @@ inline void Frame::setTransformation(XMFLOAT4X4 const & m)
 
 inline XMFLOAT3 Frame::xAxis() const
 {
-    XMVECTORF32 v_simd { m_._11, m_._12, m_._13, 1.0f };
+    XMVECTORF32 v_simd{ m_._11, m_._12, m_._13, 1.0f };
 
     XMVECTOR axis_simd = XMVector3Normalize(v_simd);
 
@@ -269,7 +269,7 @@ inline XMFLOAT3 Frame::xAxis() const
 
 inline XMFLOAT3 Frame::yAxis() const
 {
-    XMVECTORF32 v_simd { m_._21, m_._22, m_._23, 1.0f };
+    XMVECTORF32 v_simd{ m_._21, m_._22, m_._23, 1.0f };
 
     XMVECTOR axis_simd = XMVector3Normalize(v_simd);
 
@@ -280,7 +280,7 @@ inline XMFLOAT3 Frame::yAxis() const
 
 inline XMFLOAT3 Frame::zAxis() const
 {
-    XMVECTORF32 v_simd { m_._31, m_._32, m_._33, 1.0f };
+    XMVECTORF32 v_simd{ m_._31, m_._32, m_._33, 1.0f };
 
     XMVECTOR axis_simd = XMVector3Normalize(v_simd);
 
@@ -288,5 +288,4 @@ inline XMFLOAT3 Frame::zAxis() const
     XMStoreFloat4(&axis, axis_simd);
     return { axis.x, axis.y, axis.z };
 }
-
 } // namespace Dxx

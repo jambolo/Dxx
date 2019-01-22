@@ -28,11 +28,11 @@ namespace Dxx
 //! @param	position		The camera's location.
 //! @param	orientation		The camera's orientation.
 
-Camera::Camera(float                  angleOfView,
-               float                  nearDistance,
-               float                  farDistance,
-               float                  aspectRatio,
-               XMFLOAT3 const &    position,
+Camera::Camera(float            angleOfView,
+               float            nearDistance,
+               float            farDistance,
+               float            aspectRatio,
+               XMFLOAT3 const & position,
                XMFLOAT4 const & orientation /* = QuaternionIdentity()*/)
     : angleOfView_(MyMath::ToRadians(angleOfView))
     , nearDistance_(nearDistance)
@@ -50,11 +50,11 @@ Camera::Camera(float                  angleOfView,
 //! @param	aspectRatio		View window w / h
 //! @param	frame			The camera's frame of reference.
 
-Camera::Camera(float              angleOfView,
-               float              nearDistance,
-               float              farDistance,
-               float              aspectRatio,
-               Frame const &      frame /* = Frame::Identity()*/)
+Camera::Camera(float         angleOfView,
+               float         nearDistance,
+               float         farDistance,
+               float         aspectRatio,
+               Frame const & frame /* = Frame::Identity()*/)
     : angleOfView_(MyMath::ToRadians(angleOfView))
     , nearDistance_(nearDistance)
     , farDistance_(farDistance)
@@ -69,7 +69,7 @@ Camera::Camera(float              angleOfView,
 void Camera::look() const
 {
     HRESULT hr;
-    
+
     hr = pDevice_->SetTransform(D3DTS_VIEW, &viewMatrix_);
     assert_succeeded(hr);
 }
@@ -77,11 +77,11 @@ void Camera::look() const
 void Camera::reshape()
 {
     HRESULT hr;
-    
+
     hr = pDevice_->SetTransform(D3DTS_PROJECTION, &projectionMatrix_);
     assert_succeeded(hr);
 }
-#endif
+#endif // if 0
 
 XMFLOAT3 Camera::position() const
 {
@@ -109,7 +109,7 @@ XMFLOAT4 Camera::orientation() const
 
     XMFLOAT4X4 frame = frame_.transformation();
     XMFLOAT3X3 r(frame._11, frame._12, frame._13, frame._21, frame._22, frame._23, frame._31, frame._32, frame._33);
-    XMMATRIX r_simd(XMLoadFloat3x3(&r));
+    XMMATRIX   r_simd(XMLoadFloat3x3(&r));
 
     XMVECTOR q_simd(XMQuaternionRotationMatrix(r_simd));
 
@@ -117,7 +117,6 @@ XMFLOAT4 Camera::orientation() const
     XMStoreFloat4(&q, q_simd);
     return q;
 }
-
 
 void Camera::lookAt(XMFLOAT3 const & to, XMFLOAT3 const & from, XMFLOAT3 const & up)
 {
@@ -176,9 +175,9 @@ void Camera::SyncViewMatrix()
 
     XMFLOAT4X4 frame = frame_.transformation();
     XMFLOAT3X3 r(frame._11, frame._12, frame._13, frame._21, frame._22, frame._23, frame._31, frame._32, frame._33);
-    XMFLOAT3 t(frame._41, frame._42, frame._43);
-    XMMATRIX r_simd(XMLoadFloat3x3(&r));
-    XMVECTOR t_simd(XMLoadFloat3(&t));
+    XMFLOAT3   t(frame._41, frame._42, frame._43);
+    XMMATRIX   r_simd(XMLoadFloat3x3(&r));
+    XMVECTOR   t_simd(XMLoadFloat3(&t));
 
     XMMATRIX ir_simd = XMMatrixTranspose(r_simd);
     XMMATRIX it_simd = XMMatrixTranslationFromVector(-t_simd);
@@ -197,10 +196,10 @@ void Camera::SyncProjectionMatrix()
     // Compute the projection matrix
 
     XMMATRIX projection_simd = XMMatrixPerspectiveOffCenterLH(viewOffset_.x - w,
-                                     viewOffset_.x + w,
-                                     viewOffset_.y - h,
-                                     viewOffset_.y + h,
-                                     nearDistance_, farDistance_);
+                                                              viewOffset_.x + w,
+                                                              viewOffset_.y - h,
+                                                              viewOffset_.y + h,
+                                                              nearDistance_, farDistance_);
     XMStoreFloat4x4(&projectionMatrix_, projection_simd);
 }
 
@@ -224,7 +223,6 @@ void Camera::SyncInternalState()
     XMMATRIX viewProjection_simd = view_simd * projection_simd;
 
     XMStoreFloat4x4(&viewProjectionMatrix_, viewProjection_simd);
-
 
     // Compute the view frustum
 
