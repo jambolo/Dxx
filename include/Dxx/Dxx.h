@@ -1,26 +1,16 @@
-/** @file *//********************************************************************************************************
-
-                                                         Dxx.h
-
-                                            Copyright 2003, John J. Bolton
-    --------------------------------------------------------------------------------------------------------------
-
-    $Header: //depot/Libraries/Dxx/Dxx.h#7 $
-
-    $NoKeywords: $
-
- *********************************************************************************************************************/
+#if !defined(DXX_DXX_H)
+#define DXX_DXX_H
 
 #pragma once
 
-#include "Camera.h"
-#include "D3d.h"
-#include "Frame.h"
-#include "Light.h"
-#include "Random.h"
-#include "VertexBuffer.h"
-#include "VertexBufferLock.h"
-#include "VertexBufferProxy.h"
+#include "Dxx/Camera.h"
+#include "Dxx/D3dx.h"
+#include "Dxx/Frame.h"
+#include "Dxx/Light.h"
+#include "Dxx/Random.h"
+#include "Dxx/VertexBuffer.h"
+#include "Dxx/VertexBufferLock.h"
+#include "Dxx/VertexBufferProxy.h"
 
 //! @defgroup	Dxx		DirectX Extensions
 //! Home-brew extensions to DirectX
@@ -30,3 +20,5 @@
 namespace Dxx
 {
 } // namespace Dxx
+
+#endif // !defined(DXX_DXX_H)

@@ -1,21 +1,6 @@
-/** @file *//********************************************************************************************************
-
-                                                     Random.cpp
-
-                                            Copyright 2003, John J. Bolton
-    --------------------------------------------------------------------------------------------------------------
-
-    $Header: //depot/Libraries/Dxx/Random.cpp#4 $
-
-    $NoKeywords: $
-
- *********************************************************************************************************************/
-
-#include "PrecompiledHeaders.h"
-
 #include "Random.h"
 
-#include "Misc/Assert.h"
+#include "Misc/Assertx.h"
 #include "MyMath/Constants.h"
 #include "MyMath/FastMath.h"
 

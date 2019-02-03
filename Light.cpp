@@ -1,5 +1,3 @@
-#include "PrecompiledHeaders.h"
-
 #include "Light.h"
 
 #include <dxgi.h>

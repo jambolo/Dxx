@@ -1,19 +1,4 @@
-/** @file *//********************************************************************************************************
-
-                                                ComputeFaceNormal.cpp
-
-                                            Copyright 2003, John J. Bolton
-    --------------------------------------------------------------------------------------------------------------
-
-    $Header: //depot/Libraries/Dxx/ComputeFaceNormal.cpp#7 $
-
-    $NoKeywords: $
-
-********************************************************************************************************************/
-
-#include "PrecompiledHeaders.h"
-
-#include "D3d.h"
+#include "D3dx.h"
 #include <DirectXMath.h>
 
 using namespace DirectX;

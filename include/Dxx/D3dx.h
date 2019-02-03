@@ -1,17 +1,7 @@
-/** @file *//********************************************************************************************************
-
-                                                        D3d.h
-
-                                            Copyright 2003, John J. Bolton
-    --------------------------------------------------------------------------------------------------------------
-
-    $Header: //depot/Libraries/Dxx/D3d.h#26 $
-
-    $NoKeywords: $
-
-********************************************************************************************************************/
-
 #pragma once
+
+#if !defined(DXX_D3DX_H)
+#define DXX_D3DX_H
 
 #include <d3d11.h>
 #include <DirectXMath.h>
@@ -234,3 +224,5 @@ HRESULT SetTextureStage(ID3D11Device *          pD3dDevice,
 #endif // if 0
 //@}
 } // namespace Dxx
+
+#endif // !defined(DXX_D3DX_H)

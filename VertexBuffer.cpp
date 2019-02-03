@@ -1,110 +1,94 @@
-#include "PrecompiledHeaders.h"
-
 #include "VertexBuffer.h"
+
+#include <cassert>
 
 namespace Dxx
 {
-//! @param	pDevice		Device the vertex buffer is to be associated with.
-//! @param	pData		Data to copy to the new vertex buffer.
-//! @param	size		Number of bytes to copy.
-//! @param	fvf			FVF flags (see the docs for D3DFVF).
-//! @param	ppVB		Where to store the pointer to the new vertex buffer.
-//! @param	pool		Memory pool (see the docs for D3DPOOL).
+//! @param    pDevice        Device the vertex buffer is to be associated with.
+//! @param    pData        Data to copy to the new vertex buffer.
+//! @param    size        Number of bytes to copy.
+//! @param    ppVB        Where to store the pointer to the new vertex buffer.
 //!
-//! @note	Release() must be called to release the buffer if it was successfully created
+//! @note    Release() must be called to release the buffer if it was successfully created
 
-HRESULT CreateStaticVertexBuffer(ID3D11Device * pDevice,
-                                 void const * pData, size_t size,
-                                 DWORD fvf,
-                                 ID3D11Buffer ** ppVB/*,
-                                                        D3DPOOL pool = D3DPOOL_MANAGED*/)
+HRESULT CreateStaticVertexBuffer(ID3D11Device *  pDevice,
+                                 void const *    pData,
+                                 size_t          size,
+                                 ID3D11Buffer ** ppVB)
 {
-#if 0
-    assert(pData != 0);
+    assert(pData);
     assert(size > 0);
-    assert(ppVB != 0);
+    assert(ppVB);
 
-    ID3D11Buffer * pVB;
-    HRESULT        hr;
+    D3D11_BUFFER_DESC desc =
+    {
+        (UINT)size,                 // UINT        ByteWidth;
+        D3D11_USAGE_DEFAULT,        // D3D11_USAGE Usage;
+        D3D11_BIND_VERTEX_BUFFER,   // UINT        BindFlags;
+        0,                          // UINT        CPUAccessFlags;
+        0,                          // UINT        MiscFlags;
+        0                           // UINT        StructureByteStride;
+    };
 
-    // Create the vertex buffer
+    D3D11_SUBRESOURCE_DATA data =
+    {
+        pData,  // const void *pSysMem;
+        0,      // UINT       SysMemPitch;
+        0       // UINT       SysMemSlicePitch;
+    };
 
-    hr = pDevice->CreateVertexBuffer(size, D3DUSAGE_WRITEONLY, fvf, pool, &pVB, NULL);
+    HRESULT hr = pDevice->CreateBuffer(&desc, &data, ppVB);
     if (FAILED(hr))
         return hr;
 
-    // Copy the vertex data to the vertex buffer
-
-    try
-    {
-        VertexBufferLock lock(pVB, 0, 0, 0);
-
-        memcpy(lock.GetLockedBuffer(), pData, size);
-    }
-    catch (...)
-    {
-        pVB->Release();
-        return S_FALSE;
-    }
-
-    // Return the address of the vertex buffer
-
-    *ppVB = pVB;
-
-    return D3D_OK;
-#endif  // if 0
-    return S_FALSE;
+    return S_OK;
 }
 
-//! @param	pDevice		Device the vertex buffer is to be associated with.
-//! @param	pData		Data to copy to the new vertex buffer.
-//! @param	size		Number of bytes to copy.
-//! @param	format		Index value format (See the docs for CreateIndexBuffer for valid values).
-//! @param	ppIB		Where to store the pointer to the new vertex buffer.
-//! @param	pool		Memory pool (See the docs for D3DPOOL for valid values).
+//! @param    pDevice   Device the index buffer is to be associated with.
+//! @param    pContext  Context the index buffer is to be associated with.
+//! @param    pData     Data to copy to the new index buffer.
+//! @param    size      Number of bytes to copy.
+//! @param    format    Index value format DXGI_FORMAT_R16_UINT or DXGI_FORMAT_R32_UINT.
+//! @param    ppIB      Where to store the pointer to the new index buffer.
 //!
-//! @note	Release() must be called to release the buffer if it was successfully created
+//! @note    Release() must be called to release the buffer if it was successfully created
 
-HRESULT CreateStaticIndexBuffer(ID3D11Device * pDevice,
-                                void const * pData, size_t size,
-                                DXGI_FORMAT format,
-                                ID3D11Buffer ** ppIB/*,
-                                                       D3DPOOL pool*//* = D3DPOOL_MANAGED*/)
+HRESULT CreateStaticIndexBuffer(ID3D11Device *        pDevice,
+                                ID3D11DeviceContext * pContext,
+                                void const *          pData,
+                                size_t                size,
+                                DXGI_FORMAT           format,
+                                ID3D11Buffer **       ppIB)
 {
-#if 0
-    assert(pData != 0);
+    assert(pData);
     assert(size > 0);
-    assert(ppIB != 0);
+    assert(format == DXGI_FORMAT_R16_UINT || format == DXGI_FORMAT_R32_UINT);
+    assert(ppIB);
 
-    ID3D11Buffer * pIB;
-    HRESULT        hr;
+    D3D11_BUFFER_DESC desc =
+    {
+        (UINT)size,                 // UINT        ByteWidth;
+        D3D11_USAGE_DEFAULT,        // D3D11_USAGE Usage;
+        D3D11_BIND_INDEX_BUFFER,    // UINT        BindFlags;
+        0,                          // UINT        CPUAccessFlags;
+        0,                          // UINT        MiscFlags;
+        0                           // UINT        StructureByteStride;
+    };
 
-    // Create the index buffer
+    D3D11_SUBRESOURCE_DATA data =
+    {
+        pData,  // const void *pSysMem;
+        0,      // UINT       SysMemPitch;
+        0       // UINT       SysMemSlicePitch;
+    };
 
-    hr = pDevice->CreateIndexBuffer(size, D3DUSAGE_WRITEONLY, format, pool, &pIB, NULL);
+    HRESULT hr = pDevice->CreateBuffer(&desc, &data, ppIB);
     if (FAILED(hr))
         return hr;
 
-    // Copy the index data to the index buffer
+    // Set the buffer.
+    pContext->IASetIndexBuffer(*ppIB, format, 0);
 
-    try
-    {
-        IndexBufferLock lock(pIB, 0, 0, 0);
-
-        memcpy(lock.GetLockedBuffer(), pData, size);
-    }
-    catch (...)
-    {
-        pIB->Release();
-        return S_FALSE;
-    }
-
-    // Return the address of the index buffer
-
-    *ppIB = pIB;
-
-    return D3D_OK;
-#endif  // if 0
-    return S_FALSE;
+    return S_OK;
 }
 } // namespace Dxx

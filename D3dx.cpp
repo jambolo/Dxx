@@ -1,6 +1,4 @@
-#include "PrecompiledHeaders.h"
-
-#include "D3d.h"
+#include "D3dx.h"
 
 namespace Dxx
 {
@@ -115,7 +113,7 @@ HRESULT CreateD3dWindowedDevice(IDirect3D9 *    pD3d,
 }
 
 //! @param	pDevice			The device to reset.
-//! @param	zBufferFormat	Z-buffer format. The default is @c D3DFMT_UNKNOWN.
+//! @param	zBufferFormat	Z-buffer format. The default is D3DFMT_UNKNOWN.
 
 HRESULT ResetD3dWindowedDevice(ID3D11Device * pDevice, D3DFORMAT zBufferFormat /* = D3DFMT_UNKNOWN*/)
 {
@@ -293,9 +291,9 @@ HRESULT AssemblePixelShader(ID3D11Device * pDevice,
 
 //! @param	pD3dDevice	Device this applies to
 //! @param	stage		Texture stage
-//! @param	op			Operation (see docs for @c D3DTEXTUREOP)
-//! @param	arg1		Source 1 (see docs for @c D3DTA)
-//! @param	arg2		Source 2 (see docs for @c D3DTA)
+//! @param	op			Operation (see docs for D3DTEXTUREOP)
+//! @param	arg1		Source 1 (see docs for D3DTA)
+//! @param	arg2		Source 2 (see docs for D3DTA)
 //! @param	pTexture	Texture, or 0 if not used
 
 HRESULT SetTextureStage(ID3D11Device *          pD3dDevice,
