@@ -6,141 +6,73 @@
 
 #include <DirectXMath.h>
 
+#include <random>
+
 namespace Dxx
 {
+//! If both phi and theta are 0, then unlimited directions are generated.
+//! If theta is 0, then directions within phi radians from the X axis are generated.
+//! If both phi and theta are not 0, then directions within phi radians from X in the XY plane and within theta radians from X in
+//! the XZ plane are generated.
 //!
-//! @param	seed		Initial seed.
+//! @param  phi     Max angle from X axis (Valid range is [0, pi], default: 0)
+//! @param  theta   Max angle from X axis in radians in the XZ plane (Valid range is [0, pi], default: 0)
 
-RandomDirection::RandomDirection(Seed seed)
-    : rng_(seed)
+RandomDirection::RandomDirection(float phi /*= 0.0f*/, float theta /*= 0.0f*/)
+    : phi_((phi == 0.0f && theta == 0.0f) ? DirectX::XM_PI : phi)
+    , theta_(theta)
 {
+    assert_limits(0.0f, theta, DirectX::XM_PI);
+    assert_limits(0.0f, phi, DirectX::XM_PI);
 }
 
-DirectX::XMFLOAT3 RandomDirection::operator ()()
+DirectX::XMFLOAT3 RandomDirection::convert(float u, float v) const
 {
-    float r = rng_(float(DirectX::XM_2PI));
-    float t = rng_(float(DirectX::XM_2PI));
-
-    float sr, cr, st, ct;
-
-    MyMath::fsincos(r, &sr, &cr);
-    MyMath::fsincos(t, &st, &ct);
-
-    return { ct, cr * st, sr * st };
-}
-
-//! This function returns a random unit vector whose angle from the X axis is uniformly-distributed in range
-//! [0,@a a).
-//!
-//! @param	a	The maximum angle (exclusive) in radians from the X axis.
-//!
-//! @return	A unit vector.
-
-DirectX::XMFLOAT3 RandomDirection::operator ()(float a)
-{
-    float ca = cosf(a);
-    float cr = 1.f - rng_(1.f - ca);
-    float sr = sqrtf(1.f - cr * cr);
-    float t  = rng_(float(DirectX::XM_2PI));
-
-    float st, ct;
-
-    MyMath::fsincos(t, &st, &ct);
-
-    return { cr, ct * sr, st * sr };
-}
-
-//! This function returns a random unit vector whose angle from the XZ plane is uniformly-distributed in range
-//! [-<i>a<i>,+<i>a</i>), and whose angle from the XY plane is
-//! uniformly-distributed in range [-<i>b<i>,+<i>b</i>).
-
-//! @param	a	The maximum angle in radians from the XZ plane. Valid range is (0, PI].
-//! @param	b	The maximum angle in radians from the XY plane. Valid range is (0, PI/2].
-//!
-//! @return	A unit vector.
-
-DirectX::XMFLOAT3 RandomDirection::operator ()(float a, float b)
-{
-    assert(a != 0.f);
-    assert_limits(0.f, a, DirectX::XM_PI);
-    assert(b != 0.f);
-    assert_limits(0.f, b, DirectX::XM_PIDIV2);
-
     // Source: http://mathworld.wolfram.com/SpherePointPicking.html
     //
-    // u = R(-1,1)
-    // v = R(-1,1)
-    // t = a * u
-    // f = acos( b / (PI/2) * v )
-    // v = [ cos(f) * cos(t), sin(f), cos(f) * sin(t) ]
-    // v = [ cos(f) * cos(t), sqrt(1.-cos(f)*cos(f)), cos(f) * sin(t) ]
-    // ct = cos(t)
-    // st = sin(t)
-    // cf = cos(f) = b / (PI/2) * v
-    // sf = sin(f) = sqrt( 1. - cf*cf )
-    // v = [ cf * ct, sf, cf * st ]
+    //      To obtain points such that any small area on the sphere is expected to contain the same number of points
+    //      (right figure above), choose U and V to be random variates on (0,1). Then
+    //
+    //          theta = 2pi u
+    //          phi = acos(2v - 1)
 
-    float t = rng_(-a, a);
-    float cf = rng_(-b, b) / DirectX::XM_PIDIV2;
-    float sf = sqrtf(1.f - cf * cf);
+    DirectX::XMFLOAT3 d;
+    float sp, cp;
     float st, ct;
 
-    MyMath::fsincos(t, &st, &ct);
+    //  if theta is 0, then generate directions in a cone around the X axis
+    if (theta_ == 0.0f)
+    {
+        float t = DirectX::XM_2PI * u;
+        MyMath::fsincos(t, &st, &ct);
 
-    return { cf * ct, sf, cf * st };
+        cp = 1.0f - (1.0f - cos(phi_)) * v;
+        sp = sqrtf(1.0f - cp * cp);
+        d  = { cp, ct * sp, st * sp };
+    }
+
+    // Otherwise, generate directions in a section around the X axis limited by phi in the XY plane and theta in the XZ plane
+    else
+    {
+        float t = theta_ * (2.0f * u - 1.0f);
+        MyMath::fsincos(t, &st, &ct);
+
+        cp = sin(phi_) * (2.0f * v - 1.0f);
+        sp = sqrtf(1.0f - cp * cp);
+        d  = { ct * sp, st * sp, cp };
+    }
+
+    return d;
 }
 
-//!
-//! @param	state	New state.
-void RandomDirection::setState(State const & state)
+DirectX::XMFLOAT4 RandomOrientation::convert(DirectX::XMFLOAT3 const & axis, float angle) const
 {
-    rng_.setState(state);
-}
-
-RandomDirection::State RandomDirection::state() const
-{
-    return rng_.state();
-}
-
-//!
-//! @param	seed		Initial seed.
-
-RandomOrientation::RandomOrientation(Seed seed)
-    : rng_(seed)
-{
-}
-
-DirectX::XMFLOAT4 RandomOrientation::operator ()()
-{
-    float r = rng_(float(DirectX::XM_2PI));
-    float t = rng_(float(DirectX::XM_2PI));
-
-    float sr, cr, st, ct;
-
-    MyMath::fsincos(r, &sr, &cr);
-    MyMath::fsincos(t, &st, &ct);
-
-    DirectX::XMFLOAT3 direction(ct, cr * st, sr * st);
-    float a = rng_(DirectX::XM_2PI);
-    DirectX::XMVECTOR direction_simd(DirectX::XMLoadFloat3(&direction));
-
-    DirectX::XMVECTOR q_simd = DirectX::XMQuaternionRotationAxis(direction_simd, a);
+    DirectX::XMVECTOR axis_simd(DirectX::XMLoadFloat3(&axis));
+    DirectX::XMVECTOR q_simd = DirectX::XMQuaternionRotationAxis(axis_simd, angle);
 
     DirectX::XMFLOAT4 q;
     DirectX::XMStoreFloat4(&q, q_simd);
 
     return q;
-}
-
-//!
-//! @param	state	New state.
-void RandomOrientation::setState(State const & state)
-{
-    rng_.setState(state);
-}
-
-RandomOrientation::State RandomOrientation::state() const
-{
-    return rng_.state();
 }
 } // namespace Dxx
