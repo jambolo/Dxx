@@ -30,7 +30,7 @@ public:
         SPOT
     };
 
-    //! Destructor
+    //! Destructor.
     virtual ~Light() = default;
 
     //! Returns the light's ID.
@@ -47,10 +47,10 @@ public:
 
 protected:
 
-    //! Constructor
+    //! Constructor.
     Light() = delete;
 
-    //! Constructor
+    //! Constructor.
     //!
     //! @param    id            An identifier for this light.
     //! @param    type          An type of this light.
@@ -77,14 +77,14 @@ class AmbientLight : public Light
 {
 public:
 
-    //! Constructor
+    //! Constructor.
     AmbientLight(int id);
 
-    //! Constructor
+    //! Constructor.
     AmbientLight(int                   id,
                  D3DCOLORVALUE const & ambient);
 
-    //! Destructor
+    //! Destructor.
     virtual ~AmbientLight() override = default;
 
     //! Sets the ambient color.
@@ -102,7 +102,7 @@ private:
 };
 
 //! A point light
-//
+//!
 //! @ingroup Lights
 //!
 
@@ -110,10 +110,10 @@ class PointLight : public Light
 {
 public:
 
-    //! Constructor
+    //! Constructor.
     PointLight(int id);
 
-    //! Constructor
+    //! Constructor.
     PointLight(int                       id,
                D3DCOLORVALUE const &     ambient,
                D3DCOLORVALUE const &     diffuse,
@@ -124,7 +124,7 @@ public:
                float                     attenuation1,
                float                     attenuation2);
 
-    //! Destructor
+    //! Destructor.
     virtual ~PointLight() override = default;
 
     //! Sets the ambient color.
@@ -196,7 +196,7 @@ private:
 };
 
 //! A directional light
-//
+//!
 //! @ingroup Lights
 //!
 
@@ -204,17 +204,17 @@ class DirectionalLight : public Light
 {
 public:
 
-    //! Constructor
+    //! Constructor.
     DirectionalLight(int id);
 
-    //! Constructor
+    //! Constructor.
     DirectionalLight(int                       id,
                      D3DCOLORVALUE const &     ambient,
                      D3DCOLORVALUE const &     diffuse,
                      D3DCOLORVALUE const &     specular,
                      DirectX::XMFLOAT3 const & direction);
 
-    //! Destructor
+    //! Destructor.
     virtual ~DirectionalLight() override = default;
 
     //! Sets the ambient color.
@@ -256,7 +256,7 @@ private:
 };
 
 //! A spot light
-//
+//!
 //! @ingroup Lights
 //!
 
@@ -264,10 +264,10 @@ class SpotLight : public Light
 {
 public:
 
-    //! Constructor
+    //! Constructor.
     SpotLight(int id);
 
-    //! Constructor
+    //! Constructor.
     SpotLight(int                       id,
               D3DCOLORVALUE const &     ambient,
               D3DCOLORVALUE const &     diffuse,
@@ -282,7 +282,7 @@ public:
               float                     theta,
               float                     phi);
 
-    //! Destructor
+    //! Destructor.
     virtual ~SpotLight() override;
 
     //! Sets the ambient color.

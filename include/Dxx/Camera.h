@@ -11,7 +11,7 @@
 namespace Dxx
 {
 //! A camera.
-//
+//!
 //! @ingroup	D3dx
 //!
 
@@ -19,14 +19,14 @@ class Camera
 {
 public:
 
-    //! Constructor
+    //! Constructor.
     Camera(float         angleOfView,
            float         nearDistance,
            float         farDistance,
            float         aspectRatio,
            Frame const & frame = Frame::identity());
 
-    //! Constructor
+    //! Constructor.
     Camera(float                     angleOfView,
            float                     nearDistance,
            float                     farDistance,
@@ -34,7 +34,7 @@ public:
            DirectX::XMFLOAT3 const & position,
            DirectX::XMFLOAT4 const & orientation = QuaternionIdentity());
 
-    // Destructor
+    //! Destructor.
     virtual ~Camera() = default;
 
 #if 0

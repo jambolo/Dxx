@@ -14,15 +14,15 @@
 namespace Dxx
 {
 //! A class that locks a vertex buffer as long as it is in scope
-//
+//!
 //! @ingroup	D3dx
 //!
 
 class VertexBufferLock
 {
 public:
-    //! Constructor
-    //
+    //! Constructor.
+    //!
     //! The constructor locks the vertex buffer (and adds a reference).
     //!
     //! @param	pVB			Vertex buffer to lock
@@ -43,8 +43,8 @@ public:
             throw ConstructorFailedException("VertexBufferLock failed");
     }
 
-    //! Destructor
-    //
+    //! Destructor.
+    //!
     //! The destructor unlocks the vertex buffer (and releases it, also)
     //!
 
@@ -74,15 +74,15 @@ private:
 };
 
 //! A class that locks a index buffer as long as it is in scope
-//
+//!
 //! @ingroup	D3dx
 //!
 
 class IndexBufferLock
 {
 public:
-    //! Constructor
-    //
+    //! Constructor.
+    //!
     //! The constructor locks the index buffer (and adds a reference).
     //!
     //! @param	pIB			Index buffer to lock
@@ -103,8 +103,8 @@ public:
             throw ConstructorFailedException("IndexBufferLock failed");
     }
 
-    //! Destructor
-    //
+    //! Destructor.
+    //!
     //! The destructor unlocks the index buffer (and releases it, also)
     //!
 

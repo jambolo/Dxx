@@ -9,7 +9,7 @@
 namespace Dxx
 {
 //! A frame of reference including translation, scale, and orientation.
-//
+//!
 //! @ingroup	D3dx
 //!
 
@@ -17,7 +17,7 @@ class Frame
 {
 public:
 
-    //! Constructor
+    //! Constructor.
     constexpr Frame()
         : m_(DirectX::XMFLOAT4X4(
                  1.0f, 0.0f, 0.0f, 0.0f,
@@ -27,7 +27,7 @@ public:
     {
     }
 
-    //! Constructor
+    //! Constructor.
     Frame(DirectX::XMFLOAT3 const & translation,
           DirectX::XMFLOAT4 const & rotation,
           DirectX::XMFLOAT3 const & scale = DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));

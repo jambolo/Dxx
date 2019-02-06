@@ -6,7 +6,7 @@
 namespace Dxx
 {
 //! An abstract class that loads and manages textures.
-//
+//!
 //! @ingroup D3dx
 //!
 

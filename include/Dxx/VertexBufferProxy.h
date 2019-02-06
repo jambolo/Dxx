@@ -16,7 +16,7 @@ namespace Dxx
 //! @ingroup	D3dx
 
 //! A class that gives structured access to vertices in a vertex buffer.
-//
+//!
 //! @ingroup VertexBufferProxy
 //!
 
@@ -30,22 +30,22 @@ public:
     class VRef;     // Declared below
     class VPtr;     // Declared below
 
-    //! Constructor
+    //! Constructor.
     VertexBufferProxy(ID3DXMesh * pMesh);
 
-    //! Constructor
+    //! Constructor.
     VertexBufferProxy(ID3D11Buffer * pBuffer);
 
-    //! Destructor
+    //! Destructor.
     ~VertexBufferProxy();
 
     //! Returns the vertex buffer
     ID3D11Buffer * GetVertexBuffer() const;
 
-    //! Locks the buffer
+    //! Locks the buffer.
     HRESULT Lock(UINT OffsetToLock, UINT SizeToLock, DWORD Flags);
 
-    //! Unlocks the buffer
+    //! Unlocks the buffer.
     HRESULT Unlock();
 
     //! Returns a pointer to a vertex (in the form of a VPtr).
@@ -85,7 +85,7 @@ private:
 };
 
 //! A class that refers to a vertex in a vertex buffer. For use by VRef and VPtr.
-//
+//!
 //! @ingroup VertexBufferProxy
 //!
 //! This class is common to both VRef and VPtr and is used to enable access to vertex values through both pointer
@@ -95,7 +95,7 @@ class VertexBufferProxy::VRefBase
 {
 public:
 
-    //! Constructor
+    //! Constructor.
     VRefBase(VertexBufferProxy const * pProxy, void * pVertex);
 
     //! Returns a reference to the position value.
@@ -162,7 +162,7 @@ protected:
 };
 
 //! A class that acts as a pointer to a vertex in a vertex buffer
-//
+//!
 //! @ingroup VertexBufferProxy
 //!
 
@@ -170,7 +170,7 @@ class VertexBufferProxy::VPtr : private VertexBufferProxy::VRefBase
 {
 public:
 
-    //! Constructor
+    //! Constructor.
     VPtr(VertexBufferProxy const * pProxy, void * pVertex);
 
     //! @name Overloaded Operators
@@ -254,7 +254,7 @@ Dxx::VertexBufferProxy::VPtr operator +(int i, Dxx::VertexBufferProxy::VPtr cons
 namespace Dxx
 {
 //! A class that refers to a vertex in a vertex buffer
-//
+//!
 //! @ingroup VertexBufferProxy
 //!
 
@@ -262,7 +262,7 @@ class VertexBufferProxy::VRef : public VertexBufferProxy::VRefBase
 {
 public:
 
-    //! Constructor
+    //! Constructor.
     VRef(VertexBufferProxy const * pProxy, void * pVertex);
 
     //! Returns a pointer to the vertex data (in the form of a VPtr)
@@ -297,7 +297,9 @@ public:
 
 namespace Dxx
 {
+/********************************************************************************************************************/
 /*										V E R T E X B U F F E R P R O X Y											*/
+/********************************************************************************************************************/
 
 inline VertexBufferProxy::~VertexBufferProxy()
 {
